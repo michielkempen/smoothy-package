@@ -2,7 +2,7 @@
 
 function smoothy_config(string $configKey, $default = null)
 {
-    $configValue = config('smoothy.'.env('SMOOTHY_API_ENV', 'production').'.'.$configKey);
+    $configValue = config('smoothy.'.$configKey);
 
     return is_null($configValue)
         ? $default
