@@ -17,7 +17,7 @@ class RouteServiceProvider extends BaseRouteServiceProvider
      */
     public function map(Router $router)
     {
-        require '../Foundation/routeHelpers.php';
+        require __DIR__.'/../Foundation/routeHelpers.php';
 
         $router->group(['middleware' => 'web'], function () use ($router) {
 

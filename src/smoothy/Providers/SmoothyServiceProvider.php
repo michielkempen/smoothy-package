@@ -146,14 +146,14 @@ class SmoothyServiceProvider extends ServiceProvider
     private function bootAssets()
     {
         $this->publishes([
-            '../../resources/assets/sass' => resource_path('assets/sass'),
-            '../../resources/assets/fonts' => public_path('fonts'),
+            __DIR__.'/../../resources/assets/sass' => resource_path('assets/sass'),
+            __DIR__.'/../../resources/assets/fonts' => public_path('fonts'),
         ], 'update');
 
         $this->publishes([
-            '../../resources/assets/js' => resource_path('assets/js'),
-            '../../package.json' => base_path('package.json'),
-            '../../gulpfile.js' => base_path('gulpfile.js'),
+            __DIR__.'/../../resources/assets/js' => resource_path('assets/js'),
+            __DIR__.'/../../package.json' => base_path('package.json'),
+            __DIR__.'/../../gulpfile.js' => base_path('gulpfile.js'),
         ], 'init');
     }
 
@@ -162,7 +162,7 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     private function bootViews()
     {
-        $this->loadViewsFrom('../../resources/views', 'smoothy');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'smoothy');
     }
 
     /**
@@ -170,8 +170,8 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     private function bootLanguageFiles()
     {
-        $this->loadTranslationsFrom('../../resources/lang/vendor/cookieConsent', 'cookieConsent');
-        $this->loadTranslationsFrom('../../resources/lang', 'smoothy');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang/vendor/cookieConsent', 'cookieConsent');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'smoothy');
     }
 
     /**
@@ -180,6 +180,6 @@ class SmoothyServiceProvider extends ServiceProvider
     private function registerConfigFiles()
     {
         foreach ($this->config as $namespace => $file)
-            $this->mergeConfigFrom('../../config/'.$file, $namespace);
+            $this->mergeConfigFrom(__DIR__.'/../../config/'.$file, $namespace);
     }
 }
