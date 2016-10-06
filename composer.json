@@ -1,0 +1,46 @@
+{
+    "name": "michielkempen/smoothy-package",
+    "description": "A Laravel 5 package to kickstart your Smoothy application",
+    "keywords": [
+        "smoothy",
+        "smoothy-package"
+    ],
+    "homepage": "https://github.com/michielkempen/smoothy-package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Smoothy bvba",
+            "email": "info@smoothy.nu",
+            "homepage": "https://smoothy.nu"
+        }
+    ],
+    "require": {
+        "php" : "^7.0",
+        "guzzlehttp/guzzle": "^6.2",
+        "illuminate/support": "5.3.*",
+        "illuminate/http": "5.3.*",
+        "devitek/yaml-translation": "^1.0",
+        "laravelcollective/html": "^5.2",
+        "mcamara/laravel-localization": "^1.1",
+        "jakeasmith/http_build_url": "^1.0",
+        "spatie/laravel-cookie-consent": "^1.2",
+        "spatie/laravel-collection-macros": "^1.4"
+    },
+    "autoload": {
+        "files": [
+            "src/smoothy/Foundation/helpers.php"
+        ],
+        "psr-4": {
+            "Smoothy\\": "src/smoothy"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "Allows notifications to be sent via Slack"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
