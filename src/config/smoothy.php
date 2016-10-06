@@ -45,7 +45,7 @@ return [
     /*
      * API access token.
      */
-    'api-access-token' => env('SMOOTHY_API_ACCESS_TOKEN', cache()->get('api-access-token')),
+    'api-access-token' => env('SMOOTHY_API_ACCESS_TOKEN', null),
 
     /*
      * The lifetime in minutes of the api responses in the cache.

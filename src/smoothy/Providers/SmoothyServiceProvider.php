@@ -66,7 +66,7 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     private $config = [
         'smoothy' => 'smoothy.php',
-        'smoothy-api' => 'smoothyapi.php',
+        'smoothyapi' => 'smoothyapi.php',
         'laravellocalization' => 'laravellocalization.php'
     ];
 

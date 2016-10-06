@@ -11,7 +11,7 @@ return [
     'production' => [
 
         'website' => [
-            'module_id' => 0
+            'module_id' => null
         ],
 
     ],

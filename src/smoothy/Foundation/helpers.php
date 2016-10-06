@@ -1,13 +1,17 @@
 <?php
 
-function smoothy_config(string $configKey)
+function smoothy_config(string $configKey, $default = null)
 {
-    return config('smoothy.'.$configKey);
+    $configValue = config('smoothy.'.env('SMOOTHY_API_ENV', 'production').'.'.$configKey);
+
+    return is_null($configValue)
+        ? $default
+        : $configValue;
 }
 
 function smoothy_api(string $configKey)
 {
-    return config('smoothy-api.'.smoothy_config('api-environment').'.'.$configKey);
+    return config('smoothyapi.'.smoothy_config('api-environment').'.'.$configKey);
 }
 
 function api_needs_setup() : bool
