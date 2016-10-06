@@ -100,7 +100,8 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \URL::forceSchema(smoothy_config('scheme'));
+        if(env('SCHEME', 'http') == 'https')
+            \URL::forceSchema('https');
 
         $this->bootAssets();
         $this->bootViews();
