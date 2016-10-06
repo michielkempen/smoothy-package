@@ -10,7 +10,7 @@ return [
     /*
      * Defines if the laravel-localization middleware is loaded onto the routes.
      */
-    'multi-lingual' => env('MULTI_LINGUAL', true),
+    'multi-lingual' => env('MULTI_LINGUAL', false),
 
     /*
      * Defines whether the application makes use of the API facilities.
