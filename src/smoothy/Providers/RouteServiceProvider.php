@@ -17,7 +17,7 @@ class RouteServiceProvider extends BaseRouteServiceProvider
      */
     public function map(Router $router)
     {
-        require smoothy_path('Foundation/routeHelpers.php');
+        require '../Foundation/routeHelpers.php';
 
         $router->group(['middleware' => 'web'], function () use ($router) {
 

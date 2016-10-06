@@ -53,19 +53,19 @@ class Module
             $attributes['languages'],
             collect($attributes['fields'])->map(function($item) {
                 switch ($item['type']) {
-                    case getClassName(BooleanField::class):
+                    case class_basename(BooleanField::class):
                         return BooleanField::create($item);
-                    case getClassName(FilesField::class):
+                    case class_basename(FilesField::class):
                         return FilesField::create($item);
-                    case getClassName(PasswordField::class):
+                    case class_basename(PasswordField::class):
                         return PasswordField::create($item);
-                    case getClassName(SelectField::class):
+                    case class_basename(SelectField::class):
                         return SelectField::create($item);
-                    case getClassName(TextField::class):
+                    case class_basename(TextField::class):
                         return TextField::create($item);
-                    case getClassName(TextAreaField::class):
+                    case class_basename(TextAreaField::class):
                         return TextAreaField::create($item);
-                    case getClassName(WysiwygField::class):
+                    case class_basename(WysiwygField::class):
                         return WysiwygField::create($item);
                     default:
                         return null;

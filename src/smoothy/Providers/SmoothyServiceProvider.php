@@ -146,15 +146,14 @@ class SmoothyServiceProvider extends ServiceProvider
     private function bootAssets()
     {
         $this->publishes([
-            smoothy_path('resources/assets/sass') => resource_path('assets/sass'),
-            smoothy_path('resources/assets/fonts') => public_path('fonts'),
-            smoothy_path('Envoy.blade.php') => base_path('Envoy.blade.php'),
+            '../../resources/assets/sass' => resource_path('assets/sass'),
+            '../../resources/assets/fonts' => public_path('fonts'),
         ], 'update');
 
         $this->publishes([
-            smoothy_path('resources/assets/js') => resource_path('assets/js'),
-            smoothy_path('package.json') => base_path('package.json'),
-            smoothy_path('gulpfile.js') => base_path('gulpfile.js'),
+            '../../resources/assets/js' => resource_path('assets/js'),
+            '../../package.json' => base_path('package.json'),
+            '../../gulpfile.js' => base_path('gulpfile.js'),
         ], 'init');
     }
 
@@ -163,7 +162,7 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     private function bootViews()
     {
-        $this->loadViewsFrom(smoothy_path('resources/views'), 'smoothy');
+        $this->loadViewsFrom('../../resources/views', 'smoothy');
     }
 
     /**
@@ -171,8 +170,8 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     private function bootLanguageFiles()
     {
-        $this->loadTranslationsFrom(smoothy_path('resources/lang/vendor/cookieConsent'), 'cookieConsent');
-        $this->loadTranslationsFrom(smoothy_path('resources/lang'), 'smoothy');
+        $this->loadTranslationsFrom('../../resources/lang/vendor/cookieConsent', 'cookieConsent');
+        $this->loadTranslationsFrom('../../resources/lang', 'smoothy');
     }
 
     /**
@@ -181,6 +180,6 @@ class SmoothyServiceProvider extends ServiceProvider
     private function registerConfigFiles()
     {
         foreach ($this->config as $namespace => $file)
-            $this->mergeConfigFrom(smoothy_path('config/'.$file), $namespace);
+            $this->mergeConfigFrom('../../config/'.$file, $namespace);
     }
 }
