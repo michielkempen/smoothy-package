@@ -21,7 +21,7 @@ class RouteServiceProvider extends BaseRouteServiceProvider
 
         $router->group(['middleware' => 'web'], function () use ($router) {
 
-            if(!apiIsSetup()) {
+            if(smoothy_config('api-enabled') && api_needs_setup()) {
                 registerGet(
                     'api-callback',
                     'api-callback',
@@ -45,7 +45,7 @@ class RouteServiceProvider extends BaseRouteServiceProvider
      */
     private function getWebRouteOptions() : array
     {
-        if(!config('smoothy.multi-lingual'))
+        if(!smoothy_config('multi-lingual'))
             return ['middleware' => 'api-setup'];
 
         return [

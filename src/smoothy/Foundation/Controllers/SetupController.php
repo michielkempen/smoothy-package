@@ -17,11 +17,11 @@ class SetupController extends Controller
      */
     public function callback(Request $request)
     {
-        $scheme = env('SMOOTHY_API_SCHEME');
+        $scheme = smoothy_config('api-scheme');
         if($scheme == null)
             throw new \Exception('No API scheme set.');
 
-        $host = env('SMOOTHY_API_HOST');
+        $host = smoothy_config('api-host');
         if($host == null)
             throw new \Exception('No API host set.');
 
@@ -30,8 +30,8 @@ class SetupController extends Controller
         $response = (new Client)->post($url, [
             'form_params' => [
                 'grant_type' => 'authorization_code',
-                'client_id' => env('SMOOTHY_API_CLIENT_ID'),
-                'client_secret' => env('SMOOTHY_API_CLIENT_SECRET'),
+                'client_id' => smoothy_config('api-client-id'),
+                'client_secret' => smoothy_config('api-client-secret'),
                 'redirect_uri' => url('/api-callback'),
                 'code' => $request->code
             ]

@@ -10,7 +10,7 @@ class CheckWebsiteStatus
     public function handle($request, Closure $next, $guard = null)
     {
         $website = (new SmoothyApi)->website()->get(
-            smoothy_config('website.module_id')
+            smoothy_api('website.module_id')
         );
 
         switch ($website->getStatus())

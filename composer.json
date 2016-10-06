@@ -26,6 +26,9 @@
         "spatie/laravel-cookie-consent": "^1.2",
         "spatie/laravel-collection-macros": "^1.4"
     },
+    "require-dev": {
+        "filp/whoops": "^2.1"
+    },
     "autoload": {
         "files": [
             "src/smoothy/Foundation/helpers.php"

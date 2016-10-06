@@ -8,16 +8,11 @@ class SmoothyApiRequest extends ApiRequest
 {
     public function __construct()
     {
-        $scheme = env('SMOOTHY_API_SCHEME');
-        $host = env('SMOOTHY_API_HOST');
-        $accessToken = env('SMOOTHY_API_ACCESS_TOKEN', cache()->get('api-access-token'));
-
         $this
-            ->scheme($scheme)
-            ->host($host)
+            ->scheme(smoothy_config('api-scheme'))
+            ->host(smoothy_config('api-host'))
             ->header('Accept', 'application/vnd.smoothy.v1+json')
-            ->header('Authorization', 'Bearer '.$accessToken)
-            ->cache(10)
-            ->force();
+            ->header('Authorization', 'Bearer '.smoothy_config('api-access-token'))
+            ->cache(10);
     }
 }

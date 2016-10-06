@@ -2,12 +2,17 @@
 
 function smoothy_config(string $configKey)
 {
-    return config('smoothy.'.env('SMOOTHY_API_ENV', 'production').'.'.$configKey);
+    return config('smoothy.'.$configKey);
 }
 
-function apiIsSetup() : bool
+function smoothy_api(string $configKey)
 {
-    return cache()->has('api-access-token');
+    return config('smoothy-api.'.smoothy_config('api-environment').'.'.$configKey);
+}
+
+function api_needs_setup() : bool
+{
+    return !cache()->has('api-access-token');
 }
 
 function currentLocale()

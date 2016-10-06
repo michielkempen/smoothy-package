@@ -15,7 +15,6 @@ use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
 use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes;
 use Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect;
 use Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect;
-use Smoothy\Api\SmoothyApi;
 use Smoothy\Middleware\SetupApi;
 use Spatie\CollectionMacros\CollectionMacroServiceProvider;
 use Spatie\CookieConsent\CookieConsentServiceProvider;
@@ -67,6 +66,7 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     private $config = [
         'smoothy' => 'smoothy.php',
+        'smoothy-api' => 'smoothyapi.php',
         'laravellocalization' => 'laravellocalization.php'
     ];
 
@@ -93,10 +93,6 @@ class SmoothyServiceProvider extends ServiceProvider
         Collection::macro('mapToAssoc', function ($callback) {
             return $this->map($callback)->toAssoc();
         });
-
-        $this->app->singleton(SmoothyApi::class, function () {
-            return new SmoothyApi();
-        });
     }
 
     /**
@@ -104,8 +100,7 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!\App::environment('local'))
-            \URL::forceSchema('https');
+        \URL::forceSchema(smoothy_config('scheme'));
 
         $this->bootAssets();
         $this->bootViews();
@@ -151,9 +146,9 @@ class SmoothyServiceProvider extends ServiceProvider
         ], 'update');
 
         $this->publishes([
-            __DIR__.'/../../resources/assets/js' => resource_path('assets/js'),
             __DIR__.'/../../package.json' => base_path('package.json'),
             __DIR__.'/../../gulpfile.js' => base_path('gulpfile.js'),
+            __DIR__.'/../../config/smoothyapi.php' => config_path('smoothyapi.php'),
         ], 'init');
     }
 
