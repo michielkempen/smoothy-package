@@ -15,6 +15,7 @@ use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
 use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes;
 use Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect;
 use Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect;
+use Smoothy\Foundation\Images\ImageManipulator;
 use Smoothy\Middleware\SetupApi;
 use Spatie\CollectionMacros\CollectionMacroServiceProvider;
 use Spatie\CookieConsent\CookieConsentServiceProvider;
@@ -81,18 +82,7 @@ class SmoothyServiceProvider extends ServiceProvider
         $this->registerServiceProviders();
         $this->registerAliases();
         $this->registerMiddleware();
-
-        Collection::macro('toAssoc', function () {
-            return $this->reduce(function ($assoc, $keyValuePair) {
-                list($key, $value) = $keyValuePair;
-                $assoc[$key] = $value;
-                return $assoc;
-            }, new static);
-        });
-
-        Collection::macro('mapToAssoc', function ($callback) {
-            return $this->map($callback)->toAssoc();
-        });
+        $this->registerImageManipulator();
     }
 
     /**
@@ -134,6 +124,16 @@ class SmoothyServiceProvider extends ServiceProvider
     {
         foreach ($this->middleware as $name => $class)
             $this->app['router']->middleware($name, $class);
+    }
+
+    /**
+     * Register the ImageManipulator.
+     */
+    private function registerImageManipulator()
+    {
+        $this->app->singleton(ImageManipulator::class, function() {
+            return new ImageManipulator(smoothy_config('image-manipulation-secret'));
+        });
     }
 
     /**

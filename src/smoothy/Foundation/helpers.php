@@ -23,3 +23,8 @@ function currentLocale()
 {
     return \App::getLocale();
 }
+
+function manipulateImage(string $fileName, array $manipulations)
+{
+    return app(\Smoothy\Foundation\Images\ImageManipulator::class)->manipulate($fileName, $manipulations);
+}

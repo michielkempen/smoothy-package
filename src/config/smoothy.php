@@ -52,4 +52,9 @@ return [
      */
     'api-cache-ttl' => env('API_CACHE_TTL', 10),
 
+    /*
+     * The secret to sign image manipulation requests.
+     */
+    'image-manipulation-secret' => env('IMAGE_MANIPULATION_SECRET'),
+
 ];
