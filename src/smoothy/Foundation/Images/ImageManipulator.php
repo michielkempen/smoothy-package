@@ -10,9 +10,14 @@ class ImageManipulator
      * ImageManipulator constructor.
      *
      * @param string $secret
+     * @throws \Exception
      */
-    public function __construct(string $secret)
+    public function __construct(string $secret = null)
     {
+        if(is_null($secret)) {
+            throw new \Exception('No image manipulation secret set');
+        }
+
         $this->manipulator = UrlBuilderFactory::create(
             '/files/',
             $secret

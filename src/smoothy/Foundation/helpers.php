@@ -24,7 +24,11 @@ function currentLocale()
     return \App::getLocale();
 }
 
-function manipulateImage(string $fileName, array $manipulations)
+function manipulateImage(string $fileUrl, array $manipulations)
 {
-    return app(\Smoothy\Foundation\Images\ImageManipulator::class)->manipulate($fileName, $manipulations);
+    $fileName = last(explode('/', $fileUrl));
+
+    $filePath = app(\Smoothy\Foundation\Images\ImageManipulator::class)->manipulate($fileName, $manipulations);
+
+    return smoothy_config('app-scheme').'://'.smoothy_config('app-host').$filePath;
 }

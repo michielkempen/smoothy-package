@@ -30,7 +30,7 @@ return [
     /*
      * API host.
      */
-    'api-host' => env('SMOOTHY_API_HOST', 'https://api.smoothy.nu'),
+    'api-host' => env('SMOOTHY_API_HOST', 'api.smoothy.nu'),
 
     /*
      * API client id.
@@ -50,11 +50,21 @@ return [
     /*
      * The lifetime in minutes of the api responses in the cache.
      */
-    'api-cache-ttl' => env('API_CACHE_TTL', 10),
+    'api-cache-ttl' => env('SMOOTHY_API_CACHE_TTL', 10),
+
+    /*
+     * API scheme.
+     */
+    'app-scheme' => env('SMOOTHY_APP_SCHEME', 'https'),
+
+    /*
+     * API host.
+     */
+    'app-host' => env('SMOOTHY_APP_HOST', 'app.smoothy.nu'),
 
     /*
      * The secret to sign image manipulation requests.
      */
-    'image-manipulation-secret' => env('IMAGE_MANIPULATION_SECRET'),
+    'image-manipulation-secret' => env('SMOOTHY_IMAGE_MANIPULATION_SECRET'),
 
 ];
