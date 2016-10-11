@@ -4,10 +4,7 @@
 
 @section('field')
 
-    <input
-        type="checkbox"
-        name="{{ $field->getName() }}"
-        value="{{ old($field->getName()) }}"
-    >
+    <input type="hidden" name="{{ $field->getName() }}" value="0">
+    <input type="checkbox" class="js-switch" name="{{ $field->getName() }}" value="{{ old($field->getName()) }}">
 
 @overwrite

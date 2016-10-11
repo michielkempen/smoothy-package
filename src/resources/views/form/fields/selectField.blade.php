@@ -8,10 +8,15 @@
     <i class="fa fa-mouse-pointer"></i>
 
     <select
+        data-placeholder="{{ trans('smoothy::form.selectPlaceholder') }}"
         name="{{ $field->getName() }}"
         value="{{ old($field->getName()) }}"
+        @if($field->isMultiple())
+            multiple
+        @else
+            data-allow-clear="true"
+        @endif
     >
-        <option value="" selected @if($field->isRequired()) disabled @endif>{{ trans('smoothy::form.selectPlaceholder') }}</option>
         @foreach($field->getOptions() as $option)
             <option value="{{ $option }}">
                 {{ $option }}

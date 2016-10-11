@@ -1,0 +1,36 @@
+&.filesField .formField
+{
+	position: relative;
+
+	> label
+	{
+		width: 100%;
+		margin: 0;
+		background: $formFieldBackgroundColor;
+		padding: calc(#{$formFieldHeight} / 2 - 13px) 25px calc(#{$formFieldHeight} / 2 - 13px) 60px;
+		border-radius: 3px;
+		border: none;
+		height: $formFieldHeight;
+		line-height: 26px;
+		font-size: inherit;
+		outline: none;
+		font-family: inherit;
+		box-shadow: $formFieldBoxShadow;
+		display: block;
+		cursor: pointer;
+	}
+
+	input {
+		cursor: pointer;
+		display: block;
+		font-size: 999px;
+		filter: alpha(opacity=0);
+		min-height: 100%;
+		min-width: 100%;
+		opacity: 0;
+		position: absolute;
+		right: 0;
+		text-align: right;
+		top: 0;
+	}
+}

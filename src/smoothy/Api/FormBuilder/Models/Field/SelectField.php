@@ -75,4 +75,12 @@ class SelectField extends SelectFormField implements Field
     {
         return $this->formId;
     }
+
+    /**
+     * @return bool
+     */
+    public function isMultiple()
+    {
+        return false; // TODO: change
+    }
 }

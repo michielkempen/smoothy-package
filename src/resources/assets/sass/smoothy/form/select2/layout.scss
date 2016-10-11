@@ -1,0 +1,170 @@
+.select2-container--default {
+	@import "single";
+	@import "multiple";
+
+	width: 100% !important;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: 24px;
+	color: inherit;
+	border: none;
+	z-index: 99999;
+
+	.select2-dropdown.select2-dropdown--below
+	{
+		border: none;
+		background: $formSelectBackgroundColor;
+		border-radius: 5px;
+		margin-top: 10px;
+		padding: 12px;
+
+		&::after
+		{
+			position: absolute;
+			top: -9px;
+			right: calc(50% - 4.5px);
+			width: 0;
+			height: 0;
+			content: '';
+			border-right: 9px solid transparent;
+			border-bottom: 9px solid $formSelectBackgroundColor;
+			border-left: 9px solid transparent;
+		}
+	}
+
+	.select2-dropdown.select2-dropdown--above
+	{
+		border: none;
+		background: $formSelectBackgroundColor;
+		border-radius: 5px;
+		margin-top: -10px;
+		padding: 12px;
+
+		&::after
+		{
+			position: absolute;
+			bottom: -9px;
+			right: calc(50% - 4.5px);
+			width: 0;
+			height: 0;
+			content: '';
+			border-right: 9px solid transparent;
+			border-top: 9px solid $formSelectBackgroundColor;
+			border-left: 9px solid transparent;
+		}
+	}
+
+	.select2-search:before
+	{
+		display: none;
+	}
+
+	.select2-search--dropdown {
+		padding: 0;
+		margin-bottom: 10px;
+
+		.select2-search__field {
+			width: 100%;
+			height: 45px;
+			font-size: inherit;
+			font-family: inherit;
+			color: inherit;
+			border: 0;
+			border-radius: 3px;
+			outline: none;
+			background: $formFieldBackgroundColor;
+			box-shadow: $formFieldBoxShadow;
+			display: block;
+
+			line-height: 24px;
+			padding: 5px 10px;
+
+			appearance: none;
+			-moz-appearance: none;
+			-webkit-appearance: none;
+		}
+	}
+
+	.select2-search--inline {
+		line-height: 35px;
+		height: 35px;
+
+		.select2-search__field {
+			background: transparent;
+			border: none;
+			box-shadow: none;
+			height: 24px;
+			margin: 4px 0;
+			font-family: $pnLight;
+			color: darken($grey, 10);
+
+			appearance: none;
+			-moz-appearance: none;
+			-webkit-appearance: none;
+		}
+	}
+
+	.select2-results > .select2-results__options {
+		max-height: 250px;
+		overflow-y: auto;
+	}
+
+	.select2-results__option
+	{
+		background: $formSelectBackgroundColor;
+		color: $formSelectColor;
+
+		&[role=group] {
+			padding: 0;
+		}
+
+		&[aria-disabled=true] {
+			color: #999;
+		}
+
+		.select2-results__option {
+			padding-left: 1em;
+
+			.select2-results__group {
+				padding-left: 0;
+			}
+
+			.select2-results__option {
+				margin-left: -1em;
+				padding-left: 2em;
+
+				.select2-results__option {
+					margin-left: -2em;
+					padding-left: 3em;
+
+					.select2-results__option {
+						margin-left: -3em;
+						padding-left: 4em;
+
+						.select2-results__option {
+							margin-left: -4em;
+							padding-left: 5em;
+
+							.select2-results__option {
+								margin-left: -5em;
+								padding-left: 6em;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.select2-results__option--highlighted[aria-selected] {
+		border-radius: 3px;
+		background: lighten($formSelectBackgroundColor, 7.5);
+		color: #fff;
+	}
+
+	.select2-results__group {
+		cursor: default;
+		display: block;
+		padding: 6px;
+	}
+}
