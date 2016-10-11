@@ -2,4 +2,6 @@
 
 namespace Smoothy\Api\Custom\Models\Field;
 
-class PasswordField extends TextField {}
+use Smoothy\Foundation\Forms\Fields\PasswordFormField;
+
+class PasswordField extends PasswordFormField {}

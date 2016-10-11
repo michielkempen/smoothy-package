@@ -51,6 +51,6 @@ class SelectFormField extends TextFormField
      */
     public function getView() : string
     {
-        return 'form.fields.selectField';
+        return 'smoothy::form.fields.selectField';
     }
 }

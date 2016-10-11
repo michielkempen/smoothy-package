@@ -2,8 +2,6 @@
 
 namespace Smoothy\Foundation\Forms\Fields;
 
-use App\Foundation\Forms\Fields\FormField;
-
 class BooleanFormField extends FormField
 {
     /**
@@ -11,6 +9,6 @@ class BooleanFormField extends FormField
      */
     public function getView() : string
     {
-        return 'form.fields.booleanField';
+        return 'smoothy::form.fields.booleanField';
     }
 }

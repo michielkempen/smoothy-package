@@ -9,6 +9,6 @@ class TagsFormField extends TextFormField
      */
     public function getView() : string
     {
-        return 'form.fields.tagsField';
+        return 'smoothy::form.fields.tagsField';
     }
 }

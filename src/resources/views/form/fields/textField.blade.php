@@ -1,15 +1,14 @@
-@extends('smoothy::form.formBuilder.fields.field', [
-    'type' => 'priceField',
+@extends('smoothy::form.fields.field', [
+    'type' => 'textField',
     'required' => $field->isRequired()
 ])
 
 @section('field')
 
-    <i class="fa fa-money"></i>
+    <i class="fa fa-font"></i>
 
     <input
-        type="number"
-        step=".01"
+        type="text"
         name="{{ $field->getName() }}"
         value="{{ old($field->getName()) }}"
         @if($field->hasPlaceholder()) placeholder="{{ $field->getPlaceholder() }}" @endif

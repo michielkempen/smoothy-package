@@ -9,6 +9,6 @@ class PasswordFormField extends TextFormField
      */
     public function getView() : string
     {
-        return 'form.fields.passwordField';
+        return 'smoothy::form.fields.passwordField';
     }
 }

@@ -1,4 +1,4 @@
-@extends('smoothy::form.formBuilder.fields.field', [
+@extends('smoothy::form.fields.field', [
     'type' => 'booleanField'
 ])
 

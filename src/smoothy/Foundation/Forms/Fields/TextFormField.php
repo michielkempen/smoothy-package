@@ -49,6 +49,6 @@ class TextFormField extends FormField
      */
     public function getView() : string
     {
-        return (new TextFormFieldView($this))->get();
+        return 'smoothy::form.fields.textField';
     }
 }

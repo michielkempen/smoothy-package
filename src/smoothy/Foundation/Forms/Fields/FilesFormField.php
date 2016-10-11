@@ -2,8 +2,6 @@
 
 namespace Smoothy\Foundation\Forms\Fields;
 
-use App\Foundation\Forms\Fields\FormField;
-use App\Foundation\Forms\Rules\ValidationRule;
 use Illuminate\Support\Collection;
 
 class FilesFormField extends FormField
@@ -76,6 +74,6 @@ class FilesFormField extends FormField
      */
     public function getView() : string
     {
-        return 'form.fields.filesField';
+        return 'smoothy::form.fields.filesField';
     }
 }

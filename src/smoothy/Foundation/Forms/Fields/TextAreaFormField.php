@@ -9,6 +9,6 @@ class TextAreaFormField extends TextFormField
      */
     public function getView() : string
     {
-        return 'form.fields.textAreaField';
+        return 'smoothy::form.fields.textAreaField';
     }
 }

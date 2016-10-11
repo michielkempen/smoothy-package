@@ -24,6 +24,6 @@ class WysiwygFormField extends TextAreaFormField
      */
     public function getView() : string
     {
-        return 'form.fields.wysiwygField';
+        return 'smoothy::form.fields.wysiwygField';
     }
 }

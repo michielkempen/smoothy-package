@@ -1,4 +1,4 @@
-@extends('smoothy::form.formBuilder.fields.field', [
+@extends('smoothy::form.fields.field', [
     'type' => 'textAreaField',
     'required' => $field->isRequired()
 ])
@@ -7,7 +7,7 @@
 
     <textarea
         name="{{ $field->getName() }}"
-        @if($field->hasPlaceholder()) placeholder="{{ $field->getPlaceholder(currentLocale()) }}" @endif
+        @if($field->hasPlaceholder()) placeholder="{{ $field->getPlaceholder() }}" @endif
     >{{ old($field->getName()) }}</textarea>
 
 @overwrite
