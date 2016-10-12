@@ -56,6 +56,14 @@ class FilesFormField extends FormField
     }
 
     /**
+     * @return bool
+     */
+    public function hasFileTypes(): bool
+    {
+        return !$this->fileTypes->isEmpty();
+    }
+
+    /**
      * @return string
      */
     public function getFileTypesString() : string

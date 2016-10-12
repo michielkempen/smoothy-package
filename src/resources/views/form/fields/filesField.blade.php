@@ -11,6 +11,7 @@
         type="file"
         name="{{ $field->getName() }}"
         data-multiple-caption=":count bestanden geselecteerd"
+        @if($field->hasFileTypes()) accept="{{ $field->getFileTypesString() }}" @endif
     >
 
     <label for="{{ $field->getName() }}">Selecteer bestanden..</label>
