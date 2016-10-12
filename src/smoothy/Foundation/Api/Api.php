@@ -5,6 +5,7 @@ namespace Smoothy\Foundation\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Http\UploadedFile;
 use Smoothy\Foundation\Cache\ResponseCache;
 
 abstract class Api
@@ -143,13 +144,21 @@ abstract class Api
             $options['multipart'] = array();
             foreach ($this->apiRequest->getData() as $name => $value)
             {
-                if(is_array($value))
-                    $value = json_encode($value);
+                $fields = array();
+                $fields['name'] = $name;
 
-                array_push($options['multipart'], [
-                    'name' => $name,
-                    'contents' => $value
-                ]);
+                if(is_array($value)) {
+                    $fields['contents'] = json_encode($value);
+                }
+                elseif($value instanceof UploadedFile) {
+                    $fields['contents'] = fopen($value->getRealPath(), 'r');
+                    $fields['filename'] = $value->getClientOriginalName();
+                }
+                else {
+                    $fields['contents'] = $value;
+                }
+
+                array_push($options['multipart'], $fields);
             }
         }
 
