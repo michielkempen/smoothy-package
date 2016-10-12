@@ -10,8 +10,6 @@
     <input
         type="file"
         name="{{ $field->getName() }}"
-        value="{{ old($field->getName()) }}"
-        @if($field->isMultiple()) multiple @endif
         data-multiple-caption=":count bestanden geselecteerd"
     >
 
