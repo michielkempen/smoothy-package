@@ -13,6 +13,7 @@ class SmoothyApiRequest extends ApiRequest
             ->host(smoothy_config('api-host'))
             ->header('Accept', 'application/vnd.smoothy.v1+json')
             ->header('Authorization', 'Bearer '.smoothy_config('api-access-token', cache()->get('api-access-token')))
-            ->cache(10);
+            ->cache(10)
+            ->force();
     }
 }

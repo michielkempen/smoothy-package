@@ -3,16 +3,49 @@
 namespace Smoothy\Api\Custom\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Smoothy\Api\Custom\Models\Field\Field;
 
-class Page
+class Item
 {
+    /**
+     * @var int
+     */
     private $id;
+
+    /**
+     * @var int
+     */
     private $order;
-    private $customId;
+
+    /**
+     * @var int
+     */
+    private $typeId;
+
+    /**
+     * @var int
+     */
     private $moduleId;
-    private $parentId;
+
+    /**
+     * @var int
+     */
+    private $parentItemId;
+
+    /**
+     * @var Collection
+     */
     private $fields;
+
+    /**
+     * @var Carbon
+     */
     private $createdAt;
+
+    /**
+     * @var Carbon
+     */
     private $updatedAt;
 
     /**
@@ -20,51 +53,56 @@ class Page
      *
      * @param int $id
      * @param int $order
-     * @param int $customId
+     * @param int $typeId
      * @param int $moduleId
-     * @param int $parentId
-     * @param array $fields
+     * @param int $parentItemId
+     * @param Collection $fields
      * @param Carbon $createdAt
      * @param Carbon $updatedAt
      */
     public function __construct(
         int $id,
         int $order,
-        int $customId,
+        int $typeId,
         int $moduleId,
-        int $parentId,
-        array $fields,
+        int $parentItemId,
         Carbon $createdAt,
-        Carbon $updatedAt
+        Carbon $updatedAt,
+        Collection $fields
     )
     {
         $this->id = $id;
         $this->order = $order;
-        $this->customId = $customId;
+        $this->typeId = $typeId;
         $this->moduleId = $moduleId;
-        $this->parentId = $parentId;
-        $this->fields = collect($fields)->mapToAssoc(function($field) {
-            return [$field['field_id'], $field['value']];
-        });
+        $this->parentItemId = $parentItemId;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
+        $this->fields = $fields;
     }
 
     /**
      * @param array $attributes
-     * @return Page
+     * @return Item
      */
     public static function create(array $attributes)
     {
         return new self(
             $attributes['id'],
             $attributes['order'],
-            $attributes['custom_id'],
+            $attributes['type_id'],
             $attributes['module_id'],
-            $attributes['parent_id'],
-            $attributes['fields'],
+            $attributes['parent_item_id'],
             Carbon::parse($attributes['created_at']['date']),
-            Carbon::parse($attributes['updated_at']['date'])
+            Carbon::parse($attributes['updated_at']['date']),
+            collect($attributes['fields'])->mapToAssoc(function($field) {
+                return [
+                    $field['field_id'],
+                    is_array($field['value'])
+                        ? collect($field['value'])
+                        : $field['value']
+                ];
+            })
         );
     }
 
@@ -87,9 +125,9 @@ class Page
     /**
      * @return int
      */
-    public function getCustomId(): int
+    public function getTypeId(): int
     {
-        return $this->customId;
+        return $this->typeId;
     }
 
     /**
@@ -103,9 +141,9 @@ class Page
     /**
      * @return int
      */
-    public function getParentId() : int
+    public function getParentItemId() : int
     {
-        return $this->parentId;
+        return $this->parentItemId;
     }
 
     /**
@@ -115,6 +153,14 @@ class Page
     public function getField(int $fieldId)
     {
         return $this->fields->get($fieldId);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getFields(): Collection
+    {
+        return $this->fields;
     }
 
     /**

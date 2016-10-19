@@ -5,7 +5,7 @@ namespace Smoothy\Api\Custom;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Smoothy\Api\Custom\Models\Module;
-use Smoothy\Api\Custom\Models\Page;
+use Smoothy\Api\Custom\Models\Item;
 use Smoothy\Api\SmoothyApi;
 use Smoothy\Foundation\Api\ApiException;
 use Smoothy\Foundation\Api\ApiResponse;
@@ -13,155 +13,215 @@ use Smoothy\Foundation\Api\ApiResponse;
 class CustomApi
 {
     private $api;
+    private $transformer;
 
     public function __construct(SmoothyApi $api)
     {
         $this->api = $api;
+        $this->transformer = new CustomApiTransformer;
     }
 
     /**
-     * Get the pages from a custom module.
+     * Get the modules with the given ids.
      *
-     * @param int $moduleId
-     * @param int $parentId
-     * @param string $language
-     * @param int|null $perPage
-     * @param int|null $page
+     * uri:         custom/get
+     * parameter:   module_ids      array       required
+     *
+     * @param array $moduleIds
      * @return Collection
      * @throws ApiException
      */
-    public function getPages(
-        int $moduleId,
-        int $parentId,
-        string $language,
-        int $perPage = null,
-        int $page = null
-    )
-    {
+    public function getModules(
+        array $moduleIds
+    ) {
         $request = $this->api->newRequest()
-            ->get('custom/pages')
-            ->parameter('module_id', $moduleId)
-            ->parameter('parent_id', $parentId)
-            ->parameter('language', $language)
-            ->parameter('per_page', $perPage)
-            ->parameter('page', $page);
+            ->get('custom/get')
+            ->parameter('module_ids', $moduleIds);
 
         $response = $this->api->call($request);
 
         if($response->isSuccessFull())
-            return CustomApiTransformer::transformGetPagesResponse($response);
+            return $this->transformer->transformGetModulesResponse($response);
 
         throw new ApiException($response);
     }
 
     /**
-     * Get a page from a custom module.
+     * Get the types of the given module.
      *
-     * @param int $pageId
-     * @param string $language
-     * @return Page
-     * @throws ApiException
-     */
-    public function getPage(
-        int $pageId,
-        string $language
-    )
-    {
-        $request = $this->api->newRequest()
-            ->get('custom/page')
-            ->parameter('page_id', $pageId)
-            ->parameter('language', $language);
-
-        $response = $this->api->call($request);
-
-        if($response->isSuccessFull())
-            return CustomApiTransformer::transformGetPageResponse($response);
-
-        throw new ApiException($response);
-    }
-
-    /**
-     * Get the fields of a custom module.
+     * uri:         custom/types/all
+     * parameter:   module_id       int         required
      *
      * @param int $moduleId
-     * @return Module
+     * @return Collection
      * @throws ApiException
      */
-    public function get(
+    public function getAllTypes(
         int $moduleId
-    )
-    {
+    ) {
         $request = $this->api->newRequest()
-            ->get('custom')
+            ->get('custom/types/all')
             ->parameter('module_id', $moduleId);
 
         $response = $this->api->call($request);
 
         if($response->isSuccessFull())
-            return CustomApiTransformer::transformGetModuleResponse($response);
+            return $this->transformer->transformGetAllTypesResponse($response);
 
         throw new ApiException($response);
     }
 
     /**
-     * @param string $query
-     * @param Collection $searchIndex
-     * @param string $language
-     * @param int|null $perPage
-     * @param int|null $page
-     * @return LengthAwarePaginator|Collection
+     * Get the types with the given ids.
+     *
+     * uri:         custom/types/get
+     * parameter:   type_ids        array       required
+     *
+     * @param array $typeIds
+     * @return Collection
      * @throws ApiException
      */
-    public function search(
-        string $query,
-        Collection $searchIndex,
-        string $language,
+    public function getTypes(
+        array $typeIds
+    ) {
+        $request = $this->api->newRequest()
+            ->get('custom/types/get')
+            ->parameter('type_ids', $typeIds);
+
+        $response = $this->api->call($request);
+
+        if($response->isSuccessFull())
+            return $this->transformer->transformGetTypesResponse($response);
+
+        throw new ApiException($response);
+    }
+
+    /**
+     * ...
+     *
+     * uri:         custom/items/all
+     * parameter:   module_id       int         required
+     * parameter:   parent_item_id  int         required
+     * parameter:   per_page        int
+     * parameter:   page            int
+     *
+     * @param int $moduleId
+     * @param int $parentItemId
+     * @param int|null $perPage
+     * @param int|null $page
+     * @return Collection
+     * @throws ApiException
+     */
+    public function getAllItems(
+        int $moduleId,
+        int $parentItemId,
         int $perPage = null,
         int $page = null
-    )
-    {
+    ) {
         $request = $this->api->newRequest()
-            ->get('custom/search')
-            ->parameter('query', $query)
-            ->parameter('modules', $this->getModulesFromSearchIndex($searchIndex))
-            ->parameter('language', $language)
+            ->get('custom/items/all')
+            ->parameter('module_id', $moduleId)
+            ->parameter('parent_item_id', $parentItemId)
             ->parameter('per_page', $perPage)
             ->parameter('page', $page);
 
         $response = $this->api->call($request);
 
         if($response->isSuccessFull())
-            return CustomApiTransformer::transformSearchResponse(
-                $response,
-                $searchIndex
-            );
+            return $this->transformer->transformGetAllItemsResponse($response);
 
         throw new ApiException($response);
     }
 
     /**
-     * Add a page to a custom module.
+     * ...
+     *
+     * uri:         custom/items/get
+     * parameter:   item_id         int         required
+     *
+     * @param int $itemId
+     * @return Item
+     * @throws ApiException
+     */
+    public function getItem(
+        int $itemId
+    ) {
+        $request = $this->api->newRequest()
+            ->get('custom/items/get')
+            ->parameter('item_ids', [$itemId]);
+
+        $response = $this->api->call($request);
+
+        if($response->isSuccessFull())
+            return $this->transformer->transformGetItemsResponse($response)->first();
+
+        throw new ApiException($response);
+    }
+
+    /**
+     * ...
+     *
+     * uri:         custom/items/get
+     * parameter:   item_ids        array       required
+     * parameter:   per_page        int
+     * parameter:   page            int
+     *
+     * @param array $itemIds
+     * @param int|null $perPage
+     * @param int|null $page
+     * @return Collection
+     * @throws ApiException
+     */
+    public function getItems(
+        array $itemIds,
+        int $perPage = null,
+        int $page = null
+    ) {
+        $request = $this->api->newRequest()
+            ->get('custom/items/get')
+            ->parameter('item_ids', $itemIds)
+            ->parameter('per_page', $perPage)
+            ->parameter('page', $page);
+
+        $response = $this->api->call($request);
+
+        if($response->isSuccessFull())
+            return $this->transformer->transformGetItemsResponse($response);
+
+        throw new ApiException($response);
+    }
+
+    public function getItemsWhere() {
+        // TODO
+    }
+
+    /**
+     * ...
+     *
+     * uri:         custom/items/create
+     * parameter:   module_id       int         required
+     * parameter:   parent_item_id  int         required
+     * parameter:   type_id         int         required
      *
      * @param int $moduleId
-     * @param int $parentId
-     * @param string $language
+     * @param int $parentItemId
+     * @param int $typeId
      * @param array $formData
      * @return ApiResponse
      * @throws ApiException
      */
-    public function addPage(
+    public function createItem(
         int $moduleId,
-        int $parentId,
-        string $language,
+        int $parentItemId,
+        int $typeId,
         array $formData
-    )
-    {
+    ) {
         $request = $this->api->newRequest()
-            ->post('custom/pages/create')
-            ->data($formData)
-            ->parameter('language', $language)
+            ->post('custom/items/create')
             ->parameter('module_id', $moduleId)
-            ->parameter('parent_id', $parentId);
+            ->parameter('parent_item_id', $parentItemId)
+            ->parameter('type_id', $typeId)
+            ->data($formData);
 
         $response = $this->api->call($request);
 
@@ -172,15 +232,96 @@ class CustomApi
     }
 
     /**
-     * @param Collection $searchIndex
-     * @return string
+     * ...
+     *
+     * uri:         custom/items/update
+     * parameter:   item_id         int         required
+     *
+     * @param int $itemId
+     * @param array $formData
+     * @return ApiResponse
+     * @throws ApiException
      */
-    private function getModulesFromSearchIndex(Collection $searchIndex)
-    {
-        return $searchIndex->map(function($item) {
-            return collect($item)
-                ->only(['module_id', 'parent_id'])
-                ->toArray();
+    public function updateItem(
+        int $itemId,
+        array $formData
+    ) {
+        $request = $this->api->newRequest()
+            ->post('custom/items/update')
+            ->parameter('item_id', $itemId)
+            ->data($formData);
+
+        $response = $this->api->call($request);
+
+        if($response->isSuccessFull() || $response->containsValidationErrors())
+            return $response;
+
+        throw new ApiException($response);
+    }
+
+    /**
+     * ...
+     *
+     * uri:         custom/items/delete
+     * parameter:   item_ids        array       required
+     *
+     * @param array $itemIds
+     * @return ApiResponse
+     * @throws ApiException
+     */
+    public function deleteItem(
+        array $itemIds
+    ) {
+        $request = $this->api->newRequest()
+            ->post('custom/items/delete')
+            ->parameter('item_ids', $itemIds);
+
+        $response = $this->api->call($request);
+
+        if($response->isSuccessFull() || $response->containsValidationErrors())
+            return $response;
+
+        throw new ApiException($response);
+    }
+
+    /**
+     * ...
+     *
+     * uri:         custom/items/search
+     * parameter:   query           string      required
+     * parameter:   modules         array       required
+     * parameter:   per_page        int
+     * parameter:   page            int
+     *
+     * @param string $query
+     * @param Collection $searchIndex
+     * @param int|null $perPage
+     * @param int|null $page
+     * @return Collection
+     * @throws ApiException
+     */
+    public function searchItems(
+        string $query,
+        Collection $searchIndex,
+        int $perPage = null,
+        int $page = null
+    ) {
+        $modules = $searchIndex->map(function($item) {
+            return collect($item)->only(['module_id', 'parent_item_id'])->toArray();
         })->toJson();
+
+        $request = $this->api->newRequest()
+            ->get('custom/items/search')
+            ->parameter('query', $query)
+            ->parameter('modules', $modules)
+            ->parameter('per_page', $perPage)
+            ->parameter('page', $page);
+
+        $response = $this->api->call($request);
+
+        if($response->isSuccessFull())
+            return $this->transformer->transformSearchItemsResponse($response, $searchIndex);
+
+        throw new ApiException($response);
     }
 }

@@ -3,49 +3,44 @@
 namespace Smoothy\Api\Custom\Models\Field;
 
 use Illuminate\Support\Collection;
+use Smoothy\Foundation\Forms\Fields\FilesFormField;
 
-class FilesField extends Field
+class FilesField extends FilesFormField implements Field
 {
     /**
      * @var int
      */
-    private $minimumNumber;
+    private $id;
 
     /**
      * @var int
      */
-    private $maximumNumber;
-
-    /**
-     * @var Collection
-     */
-    private $fileTypes;
+    private $typeId;
 
     /**
      * FilesField constructor.
-     * @param array $label
-     * @param array $hint
-     * @param int $minimumNumber
-     * @param int $maximumNumber
-     * @param Collection $fileTypes
      * @param int $id
-     * @param int $moduleId
+     * @param int $formId
+     * @param Collection $label
+     * @param Collection $hint
+     * @param bool $required
+     * @param bool $multiple
+     * @param Collection $fileTypes
      */
     public function __construct(
         int $id,
-        int $moduleId,
-        array $label,
-        array $hint,
-        int $minimumNumber,
-        int $maximumNumber,
+        int $formId,
+        Collection $label,
+        Collection $hint,
+        bool $required,
+        bool $multiple,
         Collection $fileTypes
     )
     {
-        parent::__construct($id, $moduleId, $label, $hint);
+        parent::__construct($label, $hint, $required, $multiple, $fileTypes);
 
-        $this->minimumNumber = $minimumNumber;
-        $this->maximumNumber = $maximumNumber;
-        $this->fileTypes = $fileTypes;
+        $this->id = $id;
+        $this->typeId = $formId;
     }
 
     /**
@@ -56,54 +51,36 @@ class FilesField extends Field
     {
         return new static(
             $attributes['id'],
-            $attributes['module_id'],
-            $attributes['label'],
-            $attributes['hint'],
-            $attributes['minimum_number'],
-            $attributes['maximum_number'],
-            $attributes['file_types']
+            $attributes['type_id'],
+            collect($attributes['label']),
+            collect($attributes['hint']),
+            $attributes['required'],
+            $attributes['multiple'],
+            collect($attributes['file_types'])
         );
     }
 
     /**
      * @return int
      */
-    public function getMinimumNumber()
+    public function getId(): int
     {
-        return $this->minimumNumber;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMaximumNumber()
-    {
-        return $this->maximumNumber == 0
-            ? 1000
-            : $this->maximumNumber;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getFileTypes(): Collection
-    {
-        return $this->fileTypes;
+        return $this->id;
     }
 
     /**
      * @return string
      */
-    public function getFileTypesString() : string
+    public function getName() : string
     {
-        $result = '';
+        return 'field'.$this->getId();
+    }
 
-        $this->fileTypes->each(function($fileType) use (&$result) {
-            if($result != '')
-                $result .= ',';
-            $result .= $fileType;
-        });
-
-        return $result;
+    /**
+     * @return int
+     */
+    public function getTypeId() : int
+    {
+        return $this->typeId;
     }
 }

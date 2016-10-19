@@ -24,6 +24,16 @@ function currentLocale()
     return \App::getLocale();
 }
 
+function slug(string $string, int $id)
+{
+    return \Slugify::slugify($string).'-'.$id;
+}
+
+function unslug(string $url)
+{
+    return (int) last(explode('-', $url));
+}
+
 function manipulateImage(string $fileUrl, array $manipulations)
 {
     $fileName = last(explode('/', $fileUrl));

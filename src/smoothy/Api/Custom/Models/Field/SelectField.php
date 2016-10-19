@@ -2,48 +2,43 @@
 
 namespace Smoothy\Api\Custom\Models\Field;
 
-class SelectField extends TextField
+use Illuminate\Support\Collection;
+use Smoothy\Foundation\Forms\Fields\SelectFormField;
+
+class SelectField extends SelectFormField implements Field
 {
     /**
      * @var int
      */
-    private $minimumNumber;
+    private $id;
 
     /**
      * @var int
      */
-    private $maximumNumber;
-
-    /**
-     * @var array
-     */
-    private $options;
+    private $typeId;
 
     /**
      * SelectField constructor.
-     * @param array $label
-     * @param array $hint
-     * @param array $options
-     * @param int $minimumNumber
-     * @param int|null $maximumNumber
      * @param int $id
-     * @param int $moduleId
+     * @param int $formId
+     * @param Collection $label
+     * @param Collection $hint
+     * @param bool $required
+     * @param Collection $options
      */
     public function __construct(
         int $id,
-        int $moduleId,
-        array $label,
-        array $hint,
-        array $options = [],
-        int $minimumNumber,
-        int $maximumNumber = null
+        int $formId,
+        Collection $label,
+        Collection $hint,
+        bool $required,
+        Collection $options
     )
     {
-        parent::__construct($id, $moduleId, $minimumNumber > 0, $label, [], $hint);
+        parent::__construct($label, $hint, $required, $options);
 
-        $this->options = $options;
-        $this->minimumNumber = $minimumNumber;
-        $this->maximumNumber = $maximumNumber;
+        $this->id = $id;
+        $this->typeId = $formId;
     }
 
     /**
@@ -54,45 +49,43 @@ class SelectField extends TextField
     {
         return new static(
             $attributes['id'],
-            $attributes['module_id'],
-            $attributes['label'],
-            $attributes['hint'],
-            $attributes['options'],
-            $attributes['minimum_number'],
-            $attributes['maximum_number']
+            $attributes['type_id'],
+            collect($attributes['label']),
+            collect($attributes['hint']),
+            $attributes['required'],
+            collect($attributes['options'])
         );
     }
 
     /**
-     * @return array
+     * @return int
      */
-    public function getOptions()
+    public function getId(): int
     {
-        return $this->options;
+        return $this->id;
     }
 
     /**
-     * @param string $key
-     * @return mixed
+     * @return string
      */
-    public function getOption(string $key)
+    public function getName() : string
     {
-        return $this->options[$key];
+        return 'field'.$this->getId();
     }
 
     /**
      * @return int
      */
-    public function getMinimumNumber()
+    public function getTypeId() : int
     {
-        return $this->minimumNumber;
+        return $this->typeId;
     }
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getMaximumNumber()
+    public function isMultiple()
     {
-        return $this->maximumNumber;
+        return false; // TODO: change
     }
 }

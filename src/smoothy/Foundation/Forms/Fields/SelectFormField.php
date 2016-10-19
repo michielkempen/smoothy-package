@@ -2,37 +2,39 @@
 
 namespace Smoothy\Foundation\Forms\Fields;
 
+use Illuminate\Support\Collection;
+
 class SelectFormField extends TextFormField
 {
     /**
-     * @var array
+     * @var Collection
      */
     private $options;
 
     /**
      * SelectFormField constructor.
      *
-     * @param string $label
-     * @param string $hint
+     * @param Collection $label
+     * @param Collection $hint
      * @param bool $required
-     * @param array $options
+     * @param Collection $options
      */
     public function __construct(
-        string $label,
-        string $hint,
+        Collection $label,
+        Collection $hint,
         bool $required,
-        array $options
+        Collection $options
     )
     {
-        parent::__construct($label, '', $hint, $required);
+        parent::__construct($label, collect(), $hint, $required);
 
         $this->options = $options;
     }
 
     /**
-     * @return array
+     * @return Collection
      */
-    public function getOptions()
+    public function getOptions() : Collection
     {
         return $this->options;
     }

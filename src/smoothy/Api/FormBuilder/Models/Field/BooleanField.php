@@ -2,29 +2,34 @@
 
 namespace Smoothy\Api\FormBuilder\Models\Field;
 
+use Illuminate\Support\Collection;
 use Smoothy\Foundation\Forms\Fields\BooleanFormField;
 
 class BooleanField extends BooleanFormField implements Field
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     private $id;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $formId;
 
     /**
      * BooleanField constructor.
      * @param int $id
      * @param int $formId
-     * @param string $label
-     * @param string $hint
+     * @param Collection $label
+     * @param Collection $hint
      * @param bool $required
      */
     public function __construct(
         int $id,
         int $formId,
-        string $label,
-        string $hint,
+        Collection $label,
+        Collection $hint,
         bool $required
     )
     {
@@ -43,8 +48,8 @@ class BooleanField extends BooleanFormField implements Field
         return new static(
             $attributes['id'],
             $attributes['form_id'],
-            $attributes['label'],
-            $attributes['hint'],
+            collect($attributes['label']),
+            collect($attributes['hint']),
             $attributes['required']
         );
     }

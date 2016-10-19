@@ -19,15 +19,15 @@ class FilesFormField extends FormField
     /**
      * FilesFormField constructor.
      *
-     * @param string $label
-     * @param string $hint
+     * @param Collection $label
+     * @param Collection $hint
      * @param bool $required
      * @param bool $multiple
      * @param Collection $fileTypes
      */
     public function __construct(
-        string $label,
-        string $hint,
+        Collection $label,
+        Collection $hint,
         bool $required,
         bool $multiple,
         Collection $fileTypes

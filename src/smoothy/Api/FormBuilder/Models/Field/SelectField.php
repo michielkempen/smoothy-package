@@ -2,32 +2,37 @@
 
 namespace Smoothy\Api\FormBuilder\Models\Field;
 
+use Illuminate\Support\Collection;
 use Smoothy\Foundation\Forms\Fields\SelectFormField;
 
 class SelectField extends SelectFormField implements Field
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     private $id;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $formId;
 
     /**
      * SelectField constructor.
      * @param int $id
      * @param int $formId
-     * @param string $label
-     * @param string $hint
+     * @param Collection $label
+     * @param Collection $hint
      * @param bool $required
-     * @param array $options
+     * @param Collection $options
      */
     public function __construct(
         int $id,
         int $formId,
-        string $label,
-        string $hint,
+        Collection $label,
+        Collection $hint,
         bool $required,
-        array $options = []
+        Collection $options
     )
     {
         parent::__construct($label, $hint, $required, $options);
@@ -45,10 +50,10 @@ class SelectField extends SelectFormField implements Field
         return new static(
             $attributes['id'],
             $attributes['form_id'],
-            $attributes['label'],
-            $attributes['hint'],
+            collect($attributes['label']),
+            collect($attributes['hint']),
             $attributes['required'],
-            $attributes['options']
+            collect($attributes['options'])
         );
     }
 

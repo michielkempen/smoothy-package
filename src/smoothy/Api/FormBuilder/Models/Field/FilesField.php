@@ -7,18 +7,22 @@ use Smoothy\Foundation\Forms\Fields\FilesFormField;
 
 class FilesField extends FilesFormField implements Field
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     private $id;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $formId;
 
     /**
      * FilesField constructor.
      * @param int $id
      * @param int $formId
-     * @param string $label
-     * @param string $hint
+     * @param Collection $label
+     * @param Collection $hint
      * @param bool $required
      * @param bool $multiple
      * @param Collection $fileTypes
@@ -26,8 +30,8 @@ class FilesField extends FilesFormField implements Field
     public function __construct(
         int $id,
         int $formId,
-        string $label,
-        string $hint,
+        Collection $label,
+        Collection $hint,
         bool $required,
         bool $multiple,
         Collection $fileTypes
@@ -48,8 +52,8 @@ class FilesField extends FilesFormField implements Field
         return new static(
             $attributes['id'],
             $attributes['form_id'],
-            $attributes['label'],
-            $attributes['hint'],
+            collect($attributes['label']),
+            collect($attributes['hint']),
             $attributes['required'],
             $attributes['multiple'],
             collect($attributes['file_types'])

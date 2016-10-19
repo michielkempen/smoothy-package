@@ -12,17 +12,18 @@ use Smoothy\Foundation\Api\ApiResponse;
 class FormBuilderApi
 {
     private $api;
+    private $transformer;
 
     public function __construct(SmoothyApi $api)
     {
         $this->api = $api;
+        $this->transformer = new FormBuilderApiTransformer;
     }
 
     /**
      * Get forms from a formBuilder module.
      *
      * @param int $moduleId
-     * @param string|null $language
      * @param int|null $perPage
      * @param int|null $page
      * @return Collection
@@ -30,7 +31,6 @@ class FormBuilderApi
      */
     public function getForms(
         int $moduleId,
-        string $language,
         int $perPage = null,
         int $page = null
     )
@@ -38,14 +38,13 @@ class FormBuilderApi
         $request = $this->api->newRequest()
             ->get('formbuilder/forms')
             ->parameter('module_id', $moduleId)
-            ->parameter('language', $language)
             ->parameter('per_page', $perPage)
             ->parameter('page', $page);
 
         $response = $this->api->call($request);
 
         if($response->isSuccessFull())
-            return FormBuilderApiTransformer::transformGetFormsResponse(
+            return $this->transformer->transformGetFormsResponse(
                 $response
             );
 
@@ -56,24 +55,21 @@ class FormBuilderApi
      * Get form fields of a formBuilder module.
      *
      * @param int $formId
-     * @param string|null $language
      * @return Form
      * @throws ApiException
      */
     public function getForm(
-        int $formId,
-        string $language
+        int $formId
     )
     {
         $request = $this->api->newRequest()
             ->get('formbuilder/form')
-            ->parameter('form_id', $formId)
-            ->parameter('language', $language);
+            ->parameter('form_id', $formId);
 
         $response = $this->api->call($request);
 
         if($response->isSuccessFull())
-            return FormBuilderApiTransformer::transformGetFormResponse(
+            return $this->transformer->transformGetFormResponse(
                 $response
             );
 

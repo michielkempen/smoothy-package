@@ -108,6 +108,9 @@ class ApiRequest
      */
     public function parameter(string $key, $value) : ApiRequest
     {
+        if(is_array($value))
+            $value = json_encode($value);
+
         if($value !== null)
             $this->parameters[$key] = $value;
         return $this;

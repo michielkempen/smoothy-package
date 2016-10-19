@@ -2,6 +2,8 @@
 
 namespace Smoothy\Providers;
 
+use Cocur\Slugify\Bridge\Laravel\SlugifyFacade;
+use Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider;
 use Collective\Html\FormFacade;
 use Collective\Html\HtmlFacade;
 use Collective\Html\HtmlServiceProvider;
@@ -34,6 +36,7 @@ class SmoothyServiceProvider extends ServiceProvider
         RouteServiceProvider::class,
         CookieConsentServiceProvider::class,
         CollectionMacroServiceProvider::class,
+        SlugifyServiceProvider::class,
     ];
 
     /**
@@ -45,6 +48,7 @@ class SmoothyServiceProvider extends ServiceProvider
         'Form' => FormFacade::class,
         'HTML' => HtmlFacade::class,
         'LaravelLocalization' => LaravelLocalization::class,
+        'Slugify' => SlugifyFacade::class,
     ];
 
     /**

@@ -7,7 +7,7 @@
         {{ $field->getLabel(currentLocale()) }}
     </label>
 
-    <div class="formField @if($field->hasHint()) tip @endif">
+    <div class="formField @if($field->hasHint(currentLocale())) tip @endif">
 
         @yield('field')
 

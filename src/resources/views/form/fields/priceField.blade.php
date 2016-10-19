@@ -12,7 +12,7 @@
         step=".01"
         name="{{ $field->getName() }}"
         value="{{ old($field->getName()) }}"
-        @if($field->hasPlaceholder()) placeholder="{{ $field->getPlaceholder() }}" @endif
+        @if($field->hasPlaceholder(currentLocale())) placeholder="{{ $field->getPlaceholder(currentLocale()) }}" @endif
     >
 
 @overwrite

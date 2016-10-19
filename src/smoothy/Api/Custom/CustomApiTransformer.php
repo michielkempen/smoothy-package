@@ -5,82 +5,86 @@ namespace Smoothy\Api\Custom;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Smoothy\Api\Custom\Models\Module;
-use Smoothy\Api\Custom\Models\Page;
+use Smoothy\Api\Custom\Models\Item;
+use Smoothy\Api\Custom\Models\Type;
 use Smoothy\Foundation\Api\ApiResponse;
+use Smoothy\Foundation\Api\ApiTransformer;
 
-class CustomApiTransformer
+class CustomApiTransformer extends ApiTransformer
 {
     /**
      * @param ApiResponse $response
      * @return Collection
      */
-	public static function transformGetPagesResponse(ApiResponse $response) : Collection
-	{
-	    return collect($response->getContent()['data'])->map(function($item) {
-            return Page::create($item);
+    public function transformGetModulesResponse(ApiResponse $response)
+    {
+        return $this->transformCollection($response, function($item) {
+            return Module::create($item);
         });
-	}
+    }
 
     /**
      * @param ApiResponse $response
-     * @return Page
+     * @return Collection
      */
-	public static function transformGetPageResponse(ApiResponse $response) : Page
-	{
-        return Page::create(
-            $response->getContent()['data']
-        );
-	}
+    public function transformGetAllTypesResponse(ApiResponse $response)
+    {
+        return $this->transformCollection($response, function($item) {
+            return Type::create($item);
+        });
+    }
 
     /**
      * @param ApiResponse $response
-     * @return Module
+     * @return Collection
      */
-	public static function transformGetModuleResponse(ApiResponse $response)
-	{
-		return Module::create(
-            $response->getContent()['data']
-        );
-	}
+    public function transformGetTypesResponse(ApiResponse $response)
+    {
+        return $this->transformCollection($response, function($item) {
+            return Type::create($item);
+        });
+    }
+
+    /**
+     * @param ApiResponse $response
+     * @return LengthAwarePaginator|Collection
+     */
+    public function transformGetAllItemsResponse(ApiResponse $response)
+    {
+        return $this->transformPossiblyPaginatedCollection($response, function($item) {
+            return Item::create($item);
+        });
+    }
+
+    /**
+     * @param ApiResponse $response
+     * @return LengthAwarePaginator|Collection
+     */
+    public function transformGetItemsResponse(ApiResponse $response)
+    {
+        return $this->transformPossiblyPaginatedCollection($response, function($item) {
+            return Item::create($item);
+        });
+    }
 
     /**
      * @param ApiResponse $response
      * @param Collection $searchIndex
      * @return LengthAwarePaginator|Collection
      */
-    public static function transformSearchResponse(ApiResponse $response, Collection $searchIndex)
+    public function transformSearchItemsResponse(ApiResponse $response, Collection $searchIndex)
     {
-        $data = collect($response->getContent()['data'])
-            ->map(function($item){
-                return Page::create($item);
-            })->map(function(Page $page) use ($searchIndex) {
-                $searchItem = $searchIndex
-                    ->where('module_id', $page->getCustomId())
-                    ->where('parent_id', $page->getParentId())
-                    ->first();
+        return $this->transformPossiblyPaginatedCollection($response, function($item) use ($searchIndex) {
+            $item = Item::create($item);
 
-                return is_null($searchItem)
-                    ? null
-                    : call_user_func($searchItem['callback'], $page);
-            });
+            $searchItem = $searchIndex
+                ->where('module_id', $item->getTypeId())
+                ->where('parent_id', $item->getParentItemId())
+                ->first();
 
-        if(isset($response->getContent()['meta']['pagination']))
-        {
-            $pagination = $response->getContent()['meta']['pagination'];
-
-            return new LengthAwarePaginator(
-                $data,
-                $pagination['total'],
-                $pagination['per_page'],
-                $pagination['current_page']
-            );
-        }
-
-        return $data;
+            return is_null($searchItem)
+                ? null
+                : call_user_func($searchItem['callback'], $item);
+        });
     }
-
-	public static function transformAddPageResponse(ApiResponse $response)
-	{
-	    return null;
-	}
 }

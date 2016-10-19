@@ -10,7 +10,7 @@ class Website
     private $status;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $redirectUri;
 
@@ -19,7 +19,7 @@ class Website
      * @param string $status
      * @param string $redirectUri
      */
-    public function __construct(string $status, string $redirectUri)
+    public function __construct(string $status, string $redirectUri = null)
     {
         $this->status = $status;
         $this->redirectUri = $redirectUri;
@@ -46,9 +46,9 @@ class Website
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getRedirectUri(): string
+    public function getRedirectUri()
     {
         return $this->redirectUri;
     }

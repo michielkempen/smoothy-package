@@ -3,7 +3,6 @@
 namespace Smoothy\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as BaseRouteServiceProvider;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Smoothy\Foundation\Controllers\SetupController;
 

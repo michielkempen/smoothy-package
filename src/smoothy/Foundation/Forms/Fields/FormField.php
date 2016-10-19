@@ -10,12 +10,12 @@ use Illuminate\Support\Collection;
 abstract class FormField
 {
     /**
-     * @var string
+     * @var Collection
      */
     private $label;
 
     /**
-     * @var string
+     * @var Collection
      */
     private $hint;
 
@@ -27,13 +27,13 @@ abstract class FormField
     /**
      * FormField constructor.
      *
-     * @param string $label
-     * @param string $hint
+     * @param Collection $label
+     * @param Collection $hint
      * @param bool $required
      */
     public function __construct(
-        string $label,
-        string $hint,
+        Collection $label,
+        Collection $hint,
         bool $required
     )
     {
@@ -43,27 +43,34 @@ abstract class FormField
     }
 
     /**
-     * @return string
+     * @param string $language
+     * @return Collection|null|string
      */
-    public function getLabel()
+    public function getLabel(string $language = null)
     {
-        return $this->label;
+        return is_null($language)
+            ? $this->label
+            : $this->label->get($language, null);
     }
 
     /**
-     * @return string
+     * @param string $language
+     * @return Collection|null|string
      */
-    public function getHint()
+    public function getHint(string $language = null)
     {
-        return $this->hint;
+        return is_null($language)
+            ? $this->hint
+            : $this->hint->get($language, null);
     }
 
     /**
+     * @param string $language
      * @return bool
      */
-    public function hasHint() : bool
+    public function hasHint(string $language) : bool
     {
-        return $this->getHint() != '';
+        return !is_null($this->getHint($language));
     }
 
     /**

@@ -17,7 +17,7 @@
             data-allow-clear="true"
         @endif
     >
-        @foreach($field->getOptions() as $option)
+        @foreach($field->getOptions(currentLocale()) as $option)
             <option value="{{ $option }}">
                 {{ $option }}
             </option>

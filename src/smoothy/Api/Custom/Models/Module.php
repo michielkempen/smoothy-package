@@ -20,26 +20,38 @@ class Module
     private $id;
 
     /**
-     * @var array
+     * @var Collection
      */
     private $languages;
 
     /**
      * @var Collection
      */
-    private $fields;
+    private $name;
+
+    /**
+     * @var Collection
+     */
+    private $types;
 
     /**
      * Module constructor.
      * @param int $id
-     * @param array $languages
-     * @param Collection $fields
+     * @param Collection $languages
+     * @param Collection $name
+     * @param Collection $types
      */
-    public function __construct(int $id, array $languages, Collection $fields)
+    public function __construct(
+        int $id,
+        Collection $languages,
+        Collection $name,
+        Collection $types
+    )
     {
         $this->id = $id;
         $this->languages = $languages;
-        $this->fields = $fields;
+        $this->name = $name;
+        $this->types = $types;
     }
 
     /**
@@ -50,26 +62,10 @@ class Module
     {
         return new self(
             $attributes['id'],
-            $attributes['languages'],
-            collect($attributes['fields'])->map(function($item) {
-                switch ($item['type']) {
-                    case class_basename(BooleanField::class):
-                        return BooleanField::create($item);
-                    case class_basename(FilesField::class):
-                        return FilesField::create($item);
-                    case class_basename(PasswordField::class):
-                        return PasswordField::create($item);
-                    case class_basename(SelectField::class):
-                        return SelectField::create($item);
-                    case class_basename(TextField::class):
-                        return TextField::create($item);
-                    case class_basename(TextAreaField::class):
-                        return TextAreaField::create($item);
-                    case class_basename(WysiwygField::class):
-                        return WysiwygField::create($item);
-                    default:
-                        return null;
-                }
+            collect($attributes['languages']),
+            collect($attributes['name']),
+            collect($attributes['types'])->map(function($type) {
+                return Type::create($type);
             })
         );
     }
@@ -83,9 +79,9 @@ class Module
     }
 
     /**
-     * @return array
+     * @return Collection
      */
-    public function getLanguages(): array
+    public function getLanguages(): Collection
     {
         return $this->languages;
     }
@@ -93,8 +89,16 @@ class Module
     /**
      * @return Collection
      */
-    public function getFields(): Collection
+    public function getName(): Collection
     {
-        return $this->fields;
+        return $this->name;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTypes(): Collection
+    {
+        return $this->types;
     }
 }

@@ -2,49 +2,43 @@
 
 namespace Smoothy\Api\Custom\Models\Field;
 
-class TextField extends Field
+use Illuminate\Support\Collection;
+use Smoothy\Foundation\Forms\Fields\TextFormField;
+
+class TextField extends TextFormField implements Field
 {
     /**
-     * @var array
+     * @var int
      */
-    private $placeholder;
+    private $id;
 
     /**
-     * @var bool
+     * @var int
      */
-    private $required;
+    private $typeId;
 
     /**
-     * @var bool
-     */
-    private $translatable;
-
-    /**
-     * TextField constructor.
-     *
+     * TextFormField constructor.
      * @param int $id
-     * @param int $moduleId
+     * @param int $formId
+     * @param Collection $label
+     * @param Collection $placeholder
+     * @param Collection $hint
      * @param bool $required
-     * @param bool $translatable
-     * @param array $label
-     * @param array $placeholder
-     * @param array $hint
      */
     public function __construct(
         int $id,
-        int $moduleId,
-        bool $required,
-        bool $translatable,
-        array $label,
-        array $placeholder,
-        array $hint
+        int $formId,
+        Collection $label,
+        Collection $placeholder,
+        Collection $hint,
+        bool $required
     )
     {
-        parent::__construct($id, $moduleId, $label, $hint);
+        parent::__construct($label, $placeholder, $hint, $required);
 
-        $this->placeholder = $placeholder;
-        $this->required = $required;
-        $this->translatable = $translatable;
+        $this->id = $id;
+        $this->typeId = $formId;
     }
 
     /**
@@ -55,46 +49,35 @@ class TextField extends Field
     {
         return new static(
             $attributes['id'],
-            $attributes['module_id'],
-            $attributes['required'],
-            $attributes['translatable'],
-            $attributes['label'],
-            $attributes['placeholder'],
-            $attributes['hint']
+            $attributes['type_id'],
+            collect($attributes['label']),
+            collect($attributes['placeholder']),
+            collect($attributes['hint']),
+            $attributes['required']
         );
     }
 
     /**
-     * @param string $language
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
-    public function getPlaceholder(string $language = null)
+    public function getName() : string
     {
-        return $this->getTranslation($this->placeholder, $language);
+        return 'field'.$this->getId();
     }
 
     /**
-     * @param string|null $language
-     * @return bool
+     * @return int
      */
-    public function hasPlaceholder(string $language = null) : bool
+    public function getTypeId() : int
     {
-        return $this->getPlaceholder($language) != null;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isRequired()
-    {
-        return $this->required;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isTranslatable(): bool
-    {
-        return $this->translatable;
+        return $this->typeId;
     }
 }

@@ -17,22 +17,22 @@ class Form
     private $id;
 
     /**
-     * @var string
+     * @var Collection
      */
     private $name;
 
     /**
-     * @var string
+     * @var Collection
      */
     private $description;
 
     /**
-     * @var string
+     * @var Collection
      */
     private $explanation;
 
     /**
-     * @var string
+     * @var Collection
      */
     private $successMessage;
 
@@ -45,13 +45,20 @@ class Form
      * Form constructor.
      *
      * @param int $id
-     * @param string $name
-     * @param string $description
-     * @param string $explanation
-     * @param string $successMessage
+     * @param Collection $name
+     * @param Collection $description
+     * @param Collection $explanation
+     * @param Collection $successMessage
      * @param Collection $fields
      */
-    public function __construct(int $id, string $name, string $description, string $explanation, string $successMessage, Collection $fields)
+    public function __construct(
+        int $id,
+        Collection $name,
+        Collection $description,
+        Collection $explanation,
+        Collection $successMessage,
+        Collection $fields
+    )
     {
         $this->name = $name;
         $this->description = $description;
@@ -69,10 +76,10 @@ class Form
     {
         return new self(
             $attributes['id'],
-            $attributes['name'],
-            $attributes['description'],
-            $attributes['explanation'],
-            $attributes['success_message'],
+            collect($attributes['name']),
+            collect($attributes['description']),
+            collect($attributes['explanation']),
+            collect($attributes['success_message']),
             collect($attributes['fields'])->map(function($item) {
                 switch ($item['type'])
                 {
@@ -102,35 +109,47 @@ class Form
     }
 
     /**
-     * @return string
+     * @param string $language
+     * @return Collection|string|null
      */
-    public function getName(): string
+    public function getName(string $language = null)
     {
-        return $this->name;
+        return is_null($language)
+            ? $this->name
+            : $this->name->get($language, null);
     }
 
     /**
-     * @return string
+     * @param string $language
+     * @return Collection|string|null
      */
-    public function getDescription(): string
+    public function getDescription(string $language = null)
     {
-        return $this->description;
+        return is_null($language)
+            ? $this->description
+            : $this->description->get($language, null);
     }
 
     /**
-     * @return string
+     * @param string $language
+     * @return Collection|string|null
      */
-    public function getExplanation(): string
+    public function getExplanation(string $language = null)
     {
-        return $this->explanation;
+        return is_null($language)
+            ? $this->explanation
+            : $this->explanation->get($language, null);
     }
 
     /**
-     * @return string
+     * @param string $language
+     * @return Collection
      */
-    public function getSuccessMessage(): string
+    public function getSuccessMessage(string $language = null)
     {
-        return $this->successMessage;
+        return is_null($language)
+            ? $this->successMessage
+            : $this->successMessage->get($language, null);
     }
 
     /**

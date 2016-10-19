@@ -2,24 +2,26 @@
 
 namespace Smoothy\Foundation\Forms\Fields;
 
+use Illuminate\Support\Collection;
+
 class TextFormField extends FormField
 {
     /**
-     * @var string
+     * @var Collection
      */
     private $placeholder;
 
     /**
      * TextFormField constructor.
-     * @param string $label
-     * @param string $placeholder
-     * @param string $hint
+     * @param Collection $label
+     * @param Collection $placeholder
+     * @param Collection $hint
      * @param bool $required
      */
     public function __construct(
-        string $label,
-        string $placeholder,
-        string $hint,
+        Collection $label,
+        Collection $placeholder,
+        Collection $hint,
         bool $required
     )
     {
@@ -29,19 +31,23 @@ class TextFormField extends FormField
     }
 
     /**
-     * @return string
+     * @param string $language
+     * @return Collection|null|string
      */
-    public function getPlaceholder()
+    public function getPlaceholder(string $language = null)
     {
-        return $this->placeholder;
+        return is_null($language)
+            ? $this->placeholder
+            : $this->placeholder->get($language, null);
     }
 
     /**
+     * @param string $language
      * @return bool
      */
-    public function hasPlaceholder() : bool
+    public function hasPlaceholder(string $language) : bool
     {
-        return $this->getPlaceholder() != '';
+        return !is_null($this->getPlaceholder($language));
     }
 
     /**

@@ -2,31 +2,36 @@
 
 namespace Smoothy\Api\FormBuilder\Models\Field;
 
+use Illuminate\Support\Collection;
 use Smoothy\Foundation\Forms\Fields\TextFormField;
 
 class TextField extends TextFormField implements Field
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     private $id;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $formId;
 
     /**
      * TextFormField constructor.
      * @param int $id
      * @param int $formId
-     * @param string $label
-     * @param string $placeholder
-     * @param string $hint
+     * @param Collection $label
+     * @param Collection $placeholder
+     * @param Collection $hint
      * @param bool $required
      */
     public function __construct(
         int $id,
         int $formId,
-        string $label,
-        string $placeholder,
-        string $hint,
+        Collection $label,
+        Collection $placeholder,
+        Collection $hint,
         bool $required
     )
     {
@@ -45,9 +50,9 @@ class TextField extends TextFormField implements Field
         return new static(
             $attributes['id'],
             $attributes['form_id'],
-            $attributes['label'],
-            $attributes['placeholder'],
-            $attributes['hint'],
+            collect($attributes['label']),
+            collect($attributes['placeholder']),
+            collect($attributes['hint']),
             $attributes['required']
         );
     }

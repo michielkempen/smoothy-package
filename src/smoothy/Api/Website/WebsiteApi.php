@@ -13,6 +13,7 @@ class WebsiteApi
     public function __construct(SmoothyApi $api)
     {
         $this->api = $api;
+        $this->transformer = new WebsiteApiTransformer;
     }
 
     /**
@@ -33,7 +34,7 @@ class WebsiteApi
         $response = $this->api->call($request);
 
         if($response->isSuccessFull())
-            return WebsiteApiTransformer::transformGetResponse(
+            return $this->transformer->transformGetResponse(
                 $response
             );
 
