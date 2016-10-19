@@ -110,9 +110,9 @@ class Form
 
     /**
      * @param string $language
-     * @return int
+     * @return string
      */
-    public function getSlug(string $language): int
+    public function getSlug(string $language): string
     {
         return slug($this->getName($language), $this->getId());
     }
