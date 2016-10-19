@@ -13,21 +13,21 @@ class FormBuilderApiTransformer extends ApiTransformer
      * @param ApiResponse $response
      * @return Collection
      */
-	public function transformGetFormsResponse(ApiResponse $response) : Collection
-	{
-	    return $this->transformCollection($response, function($item) {
+    public function transformGetAllFormsResponse(ApiResponse $response)
+    {
+        return $this->transformPossiblyPaginatedCollection($response, function($item) {
             return Form::create($item);
         });
-	}
+    }
 
     /**
      * @param ApiResponse $response
-     * @return Form
+     * @return Collection
      */
-	public function transformGetFormResponse(ApiResponse $response) : Form
+	public function transformGetFormsResponse(ApiResponse $response)
 	{
-		return Form::create(
-            $response->getContent()['data']
-        );
+	    return $this->transformPossiblyPaginatedCollection($response, function($item) {
+            return Form::create($item);
+        });
 	}
 }

@@ -29,14 +29,14 @@ class FormBuilderApi
      * @return Collection
      * @throws ApiException
      */
-    public function getForms(
+    public function getAllForms(
         int $moduleId,
         int $perPage = null,
         int $page = null
     )
     {
         $request = $this->api->newRequest()
-            ->get('formbuilder/forms')
+            ->get('formbuilder/forms/all')
             ->parameter('module_id', $moduleId)
             ->parameter('per_page', $perPage)
             ->parameter('page', $page);
@@ -44,7 +44,7 @@ class FormBuilderApi
         $response = $this->api->call($request);
 
         if($response->isSuccessFull())
-            return $this->transformer->transformGetFormsResponse(
+            return $this->transformer->transformGetAllFormsResponse(
                 $response
             );
 
@@ -63,13 +63,38 @@ class FormBuilderApi
     )
     {
         $request = $this->api->newRequest()
-            ->get('formbuilder/form')
-            ->parameter('form_id', $formId);
+            ->get('formbuilder/forms/get')
+            ->parameter('form_ids', [$formId]);
 
         $response = $this->api->call($request);
 
         if($response->isSuccessFull())
-            return $this->transformer->transformGetFormResponse(
+            return $this->transformer->transformGetFormsResponse(
+                $response
+            )->first();
+
+        throw new ApiException($response);
+    }
+
+    /**
+     * Get form fields of a formBuilder module.
+     *
+     * @param array $formIds
+     * @return Form
+     * @throws ApiException
+     */
+    public function getForms(
+        array $formIds
+    )
+    {
+        $request = $this->api->newRequest()
+            ->get('formbuilder/forms/get')
+            ->parameter('form_ids', $formIds);
+
+        $response = $this->api->call($request);
+
+        if($response->isSuccessFull())
+            return $this->transformer->transformGetFormsResponse(
                 $response
             );
 
@@ -84,7 +109,7 @@ class FormBuilderApi
      * @return ApiResponse
      * @throws ApiException
      */
-    public function addRecord(
+    public function createRecord(
         int $formId,
         array $formData
     )
