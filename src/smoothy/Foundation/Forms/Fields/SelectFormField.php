@@ -32,20 +32,12 @@ class SelectFormField extends TextFormField
     }
 
     /**
-     * @return Collection
+     * @param string $language
+     * @return array
      */
-    public function getOptions() : Collection
+    public function getOptions(string $language) : array
     {
-        return $this->options;
-    }
-
-    /**
-     * @param string $key
-     * @return mixed
-     */
-    public function getOption(string $key)
-    {
-        return $this->options[$key];
+        return $this->options->get($language, []);
     }
 
     /**
