@@ -27,9 +27,13 @@ class ResponseParser
      * @param SmoothyApiResponse $response
      * @param SmoothyApiRequest $request
      * @return mixed|SmoothyApiResponse
+     * @throws ResponseException
      */
     private function parseGetResponse(SmoothyApiResponse $response, SmoothyApiRequest $request)
     {
+        if(!$response->isSuccessFull())
+            throw new ResponseException($response);
+
         return is_null($request->getTransformer())
             ? $response
             : $request->getTransformer()->transform($response);
