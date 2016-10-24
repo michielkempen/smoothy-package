@@ -38,7 +38,7 @@ class SetupController extends Controller
         ]);
 
         Cache::forever(
-            'api-access-token',
+            'api-access-token-'.smoothy_config('api-client-id'),
             json_decode((string) $response->getBody(), true)['access_token']
         );
 
