@@ -4,7 +4,6 @@ namespace Smoothy\Api\Setup\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Smoothy\Api\Responses\Images\ImageManipulator;
-use Smoothy\Api\Setup\Middleware\SetupSmoothyApi;
 use Spatie\CollectionMacros\CollectionMacroServiceProvider;
 
 class ApiServiceProvider extends ServiceProvider
@@ -16,15 +15,6 @@ class ApiServiceProvider extends ServiceProvider
      */
     private $providers = [
         CollectionMacroServiceProvider::class
-    ];
-
-    /**
-     * List of middleware.
-     *
-     * @var array
-     */
-    private $middleware = [
-        'smoothy-api-setup' => SetupSmoothyApi::class,
     ];
 
     /**
@@ -46,7 +36,6 @@ class ApiServiceProvider extends ServiceProvider
     {
         $this->registerConfigFiles();
         $this->registerServiceProviders();
-        $this->registerMiddleware();
         $this->registerImageManipulator();
     }
 
@@ -66,15 +55,6 @@ class ApiServiceProvider extends ServiceProvider
     {
         foreach ($this->providers as $provider)
             $this->app->register($provider);
-    }
-
-    /**
-     * Register the middleware, listed in $middleware.
-     */
-    private function registerMiddleware()
-    {
-        foreach ($this->middleware as $name => $class)
-            $this->app['router']->middleware($name, $class);
     }
 
     /**

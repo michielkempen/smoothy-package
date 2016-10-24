@@ -35,17 +35,14 @@ class RouteServiceProvider extends BaseRouteServiceProvider
      */
     private function getWebRouteOptions() : array
     {
-        if(!smoothy_config('multi-lingual'))
-            return ['middleware' => 'smoothy-api-setup'];
-
-        return [
-            'prefix' =>  \LaravelLocalization::setLocale(),
-            'middleware' => [
-                'smoothy-api-setup',
-                'localize',
-                'localizationRedirect',
-                'localeCookieRedirect'
-            ]
-        ];
+        return smoothy_config('multi-lingual')
+            ? [
+                'prefix' =>  \LaravelLocalization::setLocale(),
+                'middleware' => [
+                    'localize',
+                    'localizationRedirect',
+                    'localeCookieRedirect'
+                ]
+            ] : [];
     }
 }
