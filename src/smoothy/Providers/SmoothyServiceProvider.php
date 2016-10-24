@@ -9,7 +9,6 @@ use Collective\Html\HtmlFacade;
 use Collective\Html\HtmlServiceProvider;
 use Devitek\Core\Translation\TranslationServiceProvider;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider;
@@ -17,9 +16,8 @@ use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
 use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes;
 use Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect;
 use Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect;
-use Smoothy\Foundation\Images\ImageManipulator;
-use Smoothy\Middleware\SetupApi;
-use Spatie\CollectionMacros\CollectionMacroServiceProvider;
+use Smoothy\Api\Setup\Providers\ApiRouteServiceProvider;
+use Smoothy\Api\Setup\Providers\ApiServiceProvider;
 use Spatie\CookieConsent\CookieConsentServiceProvider;
 
 class SmoothyServiceProvider extends ServiceProvider
@@ -34,8 +32,9 @@ class SmoothyServiceProvider extends ServiceProvider
         HtmlServiceProvider::class,
         LaravelLocalizationServiceProvider::class,
         RouteServiceProvider::class,
+        ApiRouteServiceProvider::class,
+        ApiServiceProvider::class,
         CookieConsentServiceProvider::class,
-        CollectionMacroServiceProvider::class,
         SlugifyServiceProvider::class,
     ];
 
@@ -57,7 +56,6 @@ class SmoothyServiceProvider extends ServiceProvider
      * @var array
      */
     private $middleware = [
-        'api-setup' => SetupApi::class,
         'localize' => LaravelLocalizationRoutes::class,
         'localizationRedirect' => LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect' => LocaleSessionRedirect::class,
@@ -70,8 +68,6 @@ class SmoothyServiceProvider extends ServiceProvider
      * @var array
      */
     private $config = [
-        'smoothy' => 'smoothy.php',
-        'smoothyapi' => 'smoothyapi.php',
         'laravellocalization' => 'laravellocalization.php'
     ];
 
@@ -86,7 +82,6 @@ class SmoothyServiceProvider extends ServiceProvider
         $this->registerServiceProviders();
         $this->registerAliases();
         $this->registerMiddleware();
-        $this->registerImageManipulator();
     }
 
     /**
@@ -131,16 +126,6 @@ class SmoothyServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the ImageManipulator.
-     */
-    private function registerImageManipulator()
-    {
-        $this->app->singleton(ImageManipulator::class, function() {
-            return new ImageManipulator(smoothy_config('image-manipulation-secret'));
-        });
-    }
-
-    /**
      * Boot all the assets of the package.
      */
     private function bootAssets()
@@ -153,7 +138,6 @@ class SmoothyServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../package.json' => base_path('package.json'),
             __DIR__.'/../../gulpfile.js' => base_path('gulpfile.js'),
-            __DIR__.'/../../config/smoothyapi.php' => config_path('smoothyapi.php'),
         ], 'init');
     }
 

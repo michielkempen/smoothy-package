@@ -29,21 +29,16 @@
         "spatie/laravel-cookie-consent": "^1.2"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.2",
         "filp/whoops": "^2.1"
     },
     "autoload": {
         "files": [
-            "src/smoothy/Foundation/helpers.php"
+            "src/helpers/helpers.php"
         ],
         "psr-4": {
             "Smoothy\\": "src/smoothy"
         }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit"
-    },
-    "suggest": {
-        "guzzlehttp/guzzle": "Allows notifications to be sent via Slack"
     },
     "config": {
         "sort-packages": true

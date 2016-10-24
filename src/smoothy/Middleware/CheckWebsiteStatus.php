@@ -3,15 +3,35 @@
 namespace Smoothy\Middleware;
 
 use Closure;
-use Smoothy\Api\SmoothyApi;
+use Smoothy\Api\Wrapper\SmoothyApi;
 
 class CheckWebsiteStatus
 {
+    /**
+     * @var SmoothyApi
+     */
+    private $api;
+
+    /**
+     * CheckSmoothyStatus constructor.
+     */
+    public function __construct()
+    {
+        $this->api = new SmoothyApi;
+    }
+
+    /**
+     * @param $request
+     * @param Closure $next
+     * @param null $guard
+     * @return mixed
+     */
     public function handle($request, Closure $next, $guard = null)
     {
-        $website = (new SmoothyApi)->website()->get(
-            smoothy_api('website.module_id')
-        );
+        $website = $this->api
+            ->website()
+            ->get(smoothy_api('website.module_id'))
+            ->fetch();
 
         switch ($website->getStatus())
         {

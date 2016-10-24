@@ -4,7 +4,6 @@ namespace Smoothy\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as BaseRouteServiceProvider;
 use Illuminate\Routing\Router;
-use Smoothy\Foundation\Controllers\SetupController;
 
 class RouteServiceProvider extends BaseRouteServiceProvider
 {
@@ -16,17 +15,9 @@ class RouteServiceProvider extends BaseRouteServiceProvider
      */
     public function map(Router $router)
     {
-        require __DIR__.'/../Foundation/routeHelpers.php';
+        require __DIR__ . '/../../helpers/routeHelpers.php';
 
         $router->group(['middleware' => 'web'], function () use ($router) {
-
-            if(smoothy_config('api-enabled') && api_needs_setup()) {
-                registerGet(
-                    'api-callback',
-                    'api-callback',
-                    SetupController::class.'@callback'
-                );
-            }
 
             $router->group($this->getWebRouteOptions(), function () {
                 require base_path('routes/web.php');
@@ -45,12 +36,12 @@ class RouteServiceProvider extends BaseRouteServiceProvider
     private function getWebRouteOptions() : array
     {
         if(!smoothy_config('multi-lingual'))
-            return ['middleware' => 'api-setup'];
+            return ['middleware' => 'smoothy-api-setup'];
 
         return [
             'prefix' =>  \LaravelLocalization::setLocale(),
             'middleware' => [
-                'api-setup',
+                'smoothy-api-setup',
                 'localize',
                 'localizationRedirect',
                 'localeCookieRedirect'
