@@ -43,28 +43,32 @@ class ItemsApi
      * @param int $moduleId
      * @param int $parentItemId
      * @param int $typeId
+     * @param string $language
      * @param array $formData
      * @return SmoothyApiRequest
      */
-    public function create(int $moduleId, int $parentItemId = null, int $typeId, array $formData)
+    public function create(int $moduleId, int $parentItemId = null, int $typeId, string $language, array $formData)
     {
         return (new SmoothyApiRequest)
             ->post('custom/'.$moduleId.'/items')
             ->parameter('parent_item_id', $parentItemId)
             ->parameter('type_id', $typeId)
+            ->parameter('language', $language)
             ->data($formData);
     }
 
     /**
      * @param int $moduleId
      * @param int $itemId
+     * @param string $language
      * @param array $formData
      * @return SmoothyApiRequest
      */
-    public function update(int $moduleId, int $itemId, array $formData)
+    public function update(int $moduleId, int $itemId, string $language, array $formData)
     {
         return (new SmoothyApiRequest)
             ->post('custom/'.$moduleId.'/items/'.$itemId)
+            ->parameter('language', $language)
             ->data($formData);
     }
 

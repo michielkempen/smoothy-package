@@ -4,7 +4,6 @@
 
 @section('field')
 
-    <input type="hidden" name="{{ $field->getName() }}" value="0">
-    <input type="checkbox" class="js-switch" name="{{ $field->getName() }}" value="{{ old($field->getName()) }}">
+    {!! Form::checkbox($field->getName(), 1, false, ['class' => 'js-switch']) !!}
 
 @overwrite

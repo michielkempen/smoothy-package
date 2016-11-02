@@ -37,7 +37,11 @@ class SelectFormField extends TextFormField
      */
     public function getOptions(string $language) : array
     {
-        return $this->options->get($language, []);
+        return $this->options->map(function($option) use ($language) {
+            return array_key_exists($language, $option)
+                ? $option[$language]
+                : '';
+        })->toArray();
     }
 
     /**

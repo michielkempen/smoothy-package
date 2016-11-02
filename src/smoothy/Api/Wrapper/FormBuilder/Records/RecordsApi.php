@@ -11,13 +11,15 @@ class RecordsApi
      *
      * @param int $moduleId
      * @param int $formId
+     * @param string $language
      * @param array $formData
      * @return SmoothyApiRequest
      */
-    public function create(int $moduleId, int $formId, array $formData)
+    public function create(int $moduleId, int $formId, string $language, array $formData)
     {
         return (new SmoothyApiRequest)
             ->post('formbuilder/'.$moduleId.'/forms/'.$formId.'/records')
+            ->parameter('language', $language)
             ->data($formData);
     }
 }

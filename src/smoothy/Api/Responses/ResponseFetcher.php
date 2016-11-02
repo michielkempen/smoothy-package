@@ -58,10 +58,7 @@ class ResponseFetcher
         if(!$request->isForced())
         {
             // try to get the response from the cache
-            $response = $this->cache->getCachedResponseFor(
-                $request,
-                $request->getCacheKey()
-            );
+            $response = $this->cache->getCachedResponseFor($request);
 
             // if the response is fetched from the cache
             if(!is_null($response))
@@ -81,10 +78,7 @@ class ResponseFetcher
                 $request->getCacheKey()
             );
 
-            $response = $this->cache->getCachedResponseFor(
-                $request,
-                $request->getCacheKey()
-            );
+            $response = $this->cache->getCachedResponseFor($request);
         }
 
         return $response;

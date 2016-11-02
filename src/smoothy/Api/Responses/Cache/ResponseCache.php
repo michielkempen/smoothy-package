@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Cache\Repository;
-use Illuminate\Support\Facades\Cache;
 use Smoothy\Api\Requests\RequestParser;
 use Smoothy\Api\Requests\SmoothyApiRequest;
 
@@ -28,10 +27,16 @@ class ResponseCache
     private $requestParser;
 
     /**
+     * @var SmoothyCache
+     */
+    private $cache;
+
+    /**
      * ResponseCache constructor.
      */
     public function __construct()
     {
+        $this->cache = new SmoothyCache;
         $this->hasher = new RequestHasher;
         $this->requestParser = new RequestParser;
         $this->serializer = new ResponseSerializer;
@@ -73,11 +78,12 @@ class ResponseCache
      * Get the cached response for the given request.
      *
      * @param SmoothyApiRequest $request
-     * @param string $key
      * @return Response|null
      */
-    public function getCachedResponseFor(SmoothyApiRequest $request, string $key = null)
+    public function getCachedResponseFor(SmoothyApiRequest $request)
     {
+        $key = $request->getCacheKey();
+
         $request = $this->requestParser->parse($request->getRequest());
 
         $response = $this->getCache($request, $key)->get(
@@ -109,13 +115,13 @@ class ResponseCache
     /**
      * @param Request $request
      * @param string|null $key
-     * @return Repository
+     * @return Repository|SmoothyCache
      */
-    private function getCache(Request $request, string $key = null) : Repository
+    private function getCache(Request $request, string $key = null)
     {
         return is_null($key)
-            ? Cache::tags([$this->getApiCall($request)])
-            : Cache::driver();
+            ? $this->cache->tags([$this->getApiCall($request)])
+            : $this->cache;
     }
 
     /**
@@ -124,7 +130,7 @@ class ResponseCache
      */
     private function getApiCall(Request $request) : string
     {
-        return $request->getUri()->getScheme().'://'.$request->getUri()->getHost().$request->getUri()->getPath();
+        return $request->getUri()->getPath();
     }
 
     /**
