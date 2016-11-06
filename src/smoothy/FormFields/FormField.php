@@ -67,7 +67,7 @@ abstract class FormField
      */
     public function hasHint(string $language) : bool
     {
-        return !is_null($this->getHint($language));
+        return !is_null($this->getHint($language) && $this->getHint($language) != '');
     }
 
     /**

@@ -35,7 +35,7 @@ class SearchTransformer extends Transformer
             $item = Item::create($item);
 
             $searchItem = $this->searchIndex
-                ->where('module_id', $item->getTypeId())
+                ->where('module_id', $item->getModuleId())
                 ->where('parent_item_id', $item->getParentItemId())
                 ->first();
 
