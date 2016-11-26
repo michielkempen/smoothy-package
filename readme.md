@@ -10,7 +10,7 @@ You can install this package via composer using:
 composer require michielkempen/smoothy-package
 ```
 
-### service providers
+### Service providers
 
 Remove the code below from `config/app.php`
 
@@ -26,6 +26,20 @@ Add the code below to `config/app.php`
 'providers' => [
     \Smoothy\Providers\SmoothyServiceProvider::class,
 ]
+```
+
+### Middleware
+
+Add the code below to `app/Http/Kernel.php`
+
+```php
+protected $middlewareGroups = [
+    'web' => [
+        \Smoothy\Api\Setup\Middleware\SetupSmoothyApi::class,
+        \Smoothy\Middleware\CheckSmoothyStatus::class,
+        \Smoothy\Middleware\CheckWebsiteStatus::class,
+    ],
+];
 ```
 
 ### gulp
