@@ -38,7 +38,7 @@ class CheckWebsiteStatus
             case 'redirect':
                 return redirect()->to($website->getRedirectUri());
             case 'offline':
-                return response()->view('errors.503');
+                return abort(503);
             default:
                 return $next($request);
         }
