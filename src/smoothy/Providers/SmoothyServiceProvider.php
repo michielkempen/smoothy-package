@@ -55,11 +55,12 @@ class SmoothyServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    private $middleware = [
+    private $routeMiddleware = [
         'localize' => LaravelLocalizationRoutes::class,
         'localizationRedirect' => LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect' => LocaleSessionRedirect::class,
         'localeCookieRedirect' => LocaleCookieRedirect::class,
+        'validProxies'
     ];
 
     /**
@@ -89,9 +90,6 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if(env('SCHEME', 'http') == 'https')
-            \URL::forceSchema('https');
-
         $this->bootAssets();
         $this->bootViews();
         $this->bootLanguageFiles();
@@ -121,7 +119,10 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     private function registerMiddleware()
     {
-        foreach ($this->middleware as $name => $class)
+        $kernel = $this->app->make(\Illuminate\Contracts\Http\Kernel::class);
+        $kernel->pushMiddleware(\Smoothy\Middleware\ValidProxies::class);
+
+        foreach ($this->routeMiddleware as $name => $class)
             $this->app['router']->middleware($name, $class);
     }
 
