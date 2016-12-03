@@ -54,6 +54,10 @@ Execute `gulp`.
 
 ## Usage
 
+### update assets
+
+Run `php artisan vendor:publish --provider="Smoothy\Providers\SmoothyServiceProvider" --tag=update --force`
+
 ### views
 
 ```

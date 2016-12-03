@@ -132,7 +132,6 @@ class SmoothyServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../../resources/assets/sass' => resource_path('assets/sass'),
-            __DIR__.'/../../resources/assets/fonts' => public_path('fonts'),
         ], 'update');
 
         $this->publishes([
