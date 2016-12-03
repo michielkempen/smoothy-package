@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 
 html,
 body
 {
     font-family: $openSans;
+    font-weight: $lightWeight;
     width: 100%;
     font-size: 17px;
     line-height: 24px;
@@ -23,6 +24,7 @@ body
 .center
 {
     width: 100%;
+    padding: 0 30px;
     max-width: $maxWidth;
     margin: 0 auto;
     position: relative;

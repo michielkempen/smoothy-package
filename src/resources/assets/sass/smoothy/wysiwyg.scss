@@ -42,7 +42,7 @@
 
 	strong
 	{
-		font-weight: bold;
+		font-weight: $regularWeight;
 	}
 
 	em
@@ -80,7 +80,7 @@
 			counter-increment: li;
 
 			&:before {
-				font-weight: bold;
+				font-weight: $regularWeight;
 				content: counter(li);
 				display: inline-block;
 				margin-right: 20px;
@@ -121,7 +121,7 @@
 		padding-left: 20px;
 		margin-left: 5px;
 		color: inherit;
-		font-weight: 500;
+		font-weight: $regularWeight;
 
 		& > *:last-child
 		{

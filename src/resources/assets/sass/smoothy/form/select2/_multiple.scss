@@ -34,7 +34,7 @@
 	.select2-selection__clear {
 		cursor: pointer;
 		float: right;
-		font-weight: bold;
+		font-weight: $regularWeight;
 		margin-top: 5px;
 		margin-right: 10px;
 	}
@@ -61,7 +61,7 @@
 		cursor: pointer;
 
 		display: inline-block;
-		font-weight: bold;
+		font-weight: $regularWeight;
 
 		margin-right: 5px;
 	}
