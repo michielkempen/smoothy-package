@@ -13,15 +13,17 @@ class ItemsApi
     /**
      * @param int $moduleId
      * @param int $parentItemId
+     * @param string $language
      * @param int|null $perPage
      * @param int|null $page
      * @return SmoothyApiRequest
      */
-    public function all(int $moduleId, int $parentItemId = null, int $perPage = null, int $page = null)
+    public function all(int $moduleId, int $parentItemId = null, string $language = null, int $perPage = null, int $page = null)
     {
         return (new SmoothyApiRequest)
             ->get('custom/'.$moduleId.'/items')
             ->parameter('parent_item_id', $parentItemId)
+            ->parameter('language', $language)
             ->parameter('per_page', $perPage)
             ->parameter('page', $page)
             ->transform(new AllTransformer);
@@ -86,11 +88,12 @@ class ItemsApi
     /**
      * @param string $query
      * @param Collection $searchIndex
+     * @param string $language
      * @param int|null $perPage
      * @param int|null $page
      * @return SmoothyApiRequest
      */
-    public function search(string $query, Collection $searchIndex, int $perPage = null, int $page = null)
+    public function search(string $query, Collection $searchIndex, string $language = null, int $perPage = null, int $page = null)
     {
         $modules = $searchIndex->map(function($item) {
             return collect($item)->only(['module_id', 'parent_item_id'])->toArray();
@@ -100,6 +103,7 @@ class ItemsApi
             ->get('custom/items/search')
             ->parameter('query', $query)
             ->parameter('modules', $modules)
+            ->parameter('language', $language)
             ->parameter('per_page', $perPage)
             ->parameter('page', $page)
             ->transform(new SearchTransformer($searchIndex));

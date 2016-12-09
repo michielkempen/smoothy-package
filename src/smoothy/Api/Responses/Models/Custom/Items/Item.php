@@ -38,6 +38,11 @@ class Item
     private $fields;
 
     /**
+     * @var Collection
+     */
+    private $languages;
+
+    /**
      * @var Carbon
      */
     private $createdAt;
@@ -55,9 +60,10 @@ class Item
      * @param int $typeId
      * @param int $moduleId
      * @param int $parentItemId
-     * @param Collection $fields
+     * @param Collection $languages
      * @param Carbon $createdAt
      * @param Carbon $updatedAt
+     * @param Collection $fields
      */
     public function __construct(
         int $id,
@@ -65,6 +71,7 @@ class Item
         int $typeId,
         int $moduleId,
         int $parentItemId,
+        Collection $languages,
         Carbon $createdAt,
         Carbon $updatedAt,
         Collection $fields
@@ -78,6 +85,7 @@ class Item
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
         $this->fields = $fields;
+        $this->languages = $languages;
     }
 
     /**
@@ -92,6 +100,7 @@ class Item
             $attributes['type_id'],
             $attributes['module_id'],
             $attributes['parent_item_id'],
+            collect($attributes['languages']),
             Carbon::parse($attributes['created_at']['date']),
             Carbon::parse($attributes['updated_at']['date']),
             collect($attributes['fields'])->mapToAssoc(function($field) {
@@ -152,6 +161,14 @@ class Item
     public function getField(int $fieldId)
     {
         return $this->fields->get($fieldId);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getLanguages(): Collection
+    {
+        return $this->languages;
     }
 
     /**
