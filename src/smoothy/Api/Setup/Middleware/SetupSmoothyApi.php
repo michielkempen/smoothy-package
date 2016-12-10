@@ -20,20 +20,23 @@ class SetupSmoothyApi
     {
         if(smoothy_config('api-enabled') && smoothy_api_needs_setup())
         {
+            if($request->route()->getName() == 'api-callback')
+                return $next($request);
+
             $query = http_build_query([
                 'client_id' => smoothy_config('api-client-id'),
-                'redirect_uri' => url('/api-callback'),
+                'redirect_uri' => route('api-callback'),
                 'response_type' => 'code',
-                'scope' => ''
+                'scope' => 'license-'.smoothy_config('license-id')
             ]);
 
             $scheme = smoothy_config('app-scheme');
             if($scheme == null)
-                throw new \Exception('No API scheme set.');
+                throw new \Exception('No APP scheme set.');
 
             $host = smoothy_config('app-host');
             if($host == null)
-                throw new \Exception('No API host set.');
+                throw new \Exception('No APP host set.');
 
             $url = $scheme.'://'.rtrim($host, '/').'/authorize?'.$query;
 

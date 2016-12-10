@@ -37,6 +37,9 @@ class CheckSmoothyStatus
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        if(smoothy_api_needs_setup())
+            return $next($request);
+
         /** @var Status $status */
         $status = $this->api
             ->status()

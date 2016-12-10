@@ -16,12 +16,7 @@ function smoothy_api(string $configKey)
 
 function smoothy_api_needs_setup() : bool
 {
-    if(!is_null(smoothy_config('api-access-token')))
-        return false;
-
-    return !cache()->has(
-        'api-access-token-'.smoothy_config('api-client-id')
-    );
+    return is_null(smoothy_api_access_token());
 }
 
 function smoothy_api_access_token()
@@ -30,7 +25,7 @@ function smoothy_api_access_token()
 
     return !is_null($accessToken)
         ? $accessToken
-        : cache()->get(
+        : (new \Smoothy\Api\Responses\Cache\SmoothyCache)->getAccessToken(
             'api-access-token-'.smoothy_config('api-client-id')
         );
 }

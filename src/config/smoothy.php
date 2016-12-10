@@ -5,7 +5,7 @@ return [
     /*
      * Scheme of the application.
      */
-    'scheme' => env('SCHEME', 'http'),
+    'scheme' => env('SCHEME', 'https'),
 
     /*
      * Defines if the laravel-localization middleware is loaded onto the routes.
@@ -53,14 +53,19 @@ return [
     'api-cache-ttl' => env('SMOOTHY_API_CACHE_TTL', 10),
 
     /*
-     * API scheme.
+     * APP scheme.
      */
     'app-scheme' => env('SMOOTHY_APP_SCHEME', 'https'),
 
     /*
-     * API host.
+     * APP host.
      */
     'app-host' => env('SMOOTHY_APP_HOST', 'app.smoothy.nu'),
+
+    /*
+     * license id.
+     */
+    'license-id' => env('SMOOTHY_LICENSE_ID'),
 
     /*
      * The secret to sign image manipulation requests.

@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Cache;
+use Smoothy\Api\Responses\Cache\SmoothyCache;
 
 class SetupController extends Controller
 {
@@ -32,13 +33,12 @@ class SetupController extends Controller
                 'grant_type' => 'authorization_code',
                 'client_id' => smoothy_config('api-client-id'),
                 'client_secret' => smoothy_config('api-client-secret'),
-                'redirect_uri' => url('/api-callback'),
+                'redirect_uri' => route('api-callback'),
                 'code' => $request->code
             ]
         ]);
 
-        Cache::forever(
-            'api-access-token-'.smoothy_config('api-client-id'),
+        (new SmoothyCache)->storeAccessToken(
             json_decode((string) $response->getBody(), true)['access_token']
         );
 
