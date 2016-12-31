@@ -1,18 +1,18 @@
 <?php
 
-namespace Smoothy\FormFields;
+namespace Smoothy\Models\FormFields;
 
-use Illuminate\Support\Collection;
+use Smoothy\Models\Translation;
 
 abstract class FormField
 {
     /**
-     * @var Collection
+     * @var Translation
      */
     private $label;
 
     /**
-     * @var Collection
+     * @var Translation
      */
     private $hint;
 
@@ -24,13 +24,13 @@ abstract class FormField
     /**
      * FormField constructor.
      *
-     * @param Collection $label
-     * @param Collection $hint
+     * @param Translation $label
+     * @param Translation $hint
      * @param bool $required
      */
     public function __construct(
-        Collection $label,
-        Collection $hint,
+        Translation $label,
+        Translation $hint,
         bool $required
     )
     {
@@ -40,25 +40,19 @@ abstract class FormField
     }
 
     /**
-     * @param string $language
-     * @return Collection|null|string
+     * @return Translation|null
      */
-    public function getLabel(string $language = null)
+    public function getLabel()
     {
-        return is_null($language)
-            ? $this->label
-            : $this->label->get($language, null);
+        return $this->label;
     }
 
     /**
-     * @param string $language
-     * @return Collection|null|string
+     * @return Translation|null
      */
-    public function getHint(string $language = null)
+    public function getHint()
     {
-        return is_null($language)
-            ? $this->hint
-            : $this->hint->get($language, null);
+        return $this->hint;
     }
 
     /**
@@ -67,7 +61,7 @@ abstract class FormField
      */
     public function hasHint(string $language) : bool
     {
-        return !is_null($this->getHint($language) && $this->getHint($language) != '');
+        return $this->hint->language($language) != '';
     }
 
     /**

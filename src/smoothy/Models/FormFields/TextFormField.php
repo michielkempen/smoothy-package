@@ -1,27 +1,27 @@
 <?php
 
-namespace Smoothy\FormFields;
+namespace Smoothy\Models\FormFields;
 
-use Illuminate\Support\Collection;
+use Smoothy\Models\Translation;
 
 class TextFormField extends FormField
 {
     /**
-     * @var Collection
+     * @var Translation
      */
     private $placeholder;
 
     /**
      * TextFormField constructor.
-     * @param Collection $label
-     * @param Collection $placeholder
-     * @param Collection $hint
+     * @param Translation $label
+     * @param Translation $placeholder
+     * @param Translation $hint
      * @param bool $required
      */
     public function __construct(
-        Collection $label,
-        Collection $placeholder,
-        Collection $hint,
+        Translation $label,
+        Translation $placeholder,
+        Translation $hint,
         bool $required
     )
     {
@@ -31,14 +31,11 @@ class TextFormField extends FormField
     }
 
     /**
-     * @param string $language
-     * @return Collection|null|string
+     * @return Translation
      */
-    public function getPlaceholder(string $language = null)
+    public function getPlaceholder()
     {
-        return is_null($language)
-            ? $this->placeholder
-            : $this->placeholder->get($language, null);
+        return $this->placeholder;
     }
 
     /**
@@ -47,7 +44,7 @@ class TextFormField extends FormField
      */
     public function hasPlaceholder(string $language) : bool
     {
-        return !is_null($this->getPlaceholder($language));
+        return $this->placeholder->language($language) != '';
     }
 
     /**

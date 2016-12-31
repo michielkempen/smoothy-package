@@ -3,10 +3,10 @@
 namespace Smoothy\Api\Responses\Transformers\Custom\Types;
 
 use Smoothy\Api\Responses\Models\Custom\Types\Type;
-use Smoothy\Api\Responses\Transformers\Transformer;
+use Smoothy\Api\Responses\Transformers\ResponseTransformer;
 use Smoothy\Api\Responses\SmoothyApiResponse;
 
-class GetTransformer extends Transformer
+class GetTransformer extends ResponseTransformer
 {
     /**
      * @param SmoothyApiResponse $response
@@ -15,7 +15,7 @@ class GetTransformer extends Transformer
     public function transform(SmoothyApiResponse $response)
     {
         return $this->item($response, function($item) {
-            return Type::create($item);
+            return (new TypeTransformer)->transform($item);
         });
     }
 }

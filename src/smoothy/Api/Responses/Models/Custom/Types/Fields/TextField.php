@@ -2,8 +2,8 @@
 
 namespace Smoothy\Api\Responses\Models\Custom\Types\Fields;
 
-use Illuminate\Support\Collection;
-use Smoothy\FormFields\TextFormField;
+use Smoothy\Models\FormFields\TextFormField;
+use Smoothy\Models\Translation;
 
 class TextField extends TextFormField implements Field
 {
@@ -21,17 +21,17 @@ class TextField extends TextFormField implements Field
      * TextFormField constructor.
      * @param int $id
      * @param int $formId
-     * @param Collection $label
-     * @param Collection $placeholder
-     * @param Collection $hint
+     * @param Translation $label
+     * @param Translation $placeholder
+     * @param Translation $hint
      * @param bool $required
      */
     public function __construct(
         int $id,
         int $formId,
-        Collection $label,
-        Collection $placeholder,
-        Collection $hint,
+        Translation $label,
+        Translation $placeholder,
+        Translation $hint,
         bool $required
     )
     {
@@ -39,22 +39,6 @@ class TextField extends TextFormField implements Field
 
         $this->id = $id;
         $this->typeId = $formId;
-    }
-
-    /**
-     * @param array $attributes
-     * @return TextField
-     */
-    public static function create(array $attributes)
-    {
-        return new static(
-            $attributes['id'],
-            $attributes['type_id'],
-            collect($attributes['label']),
-            collect($attributes['placeholder']),
-            collect($attributes['hint']),
-            $attributes['required']
-        );
     }
 
     /**

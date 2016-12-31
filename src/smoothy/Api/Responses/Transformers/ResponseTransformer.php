@@ -6,7 +6,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Smoothy\Api\Responses\SmoothyApiResponse;
 
-abstract class Transformer
+abstract class ResponseTransformer
 {
     /**
      * @param SmoothyApiResponse $response
@@ -17,7 +17,7 @@ abstract class Transformer
     /**
      * @param SmoothyApiResponse $response
      * @param \Closure $map
-     * @return Collection
+     * @return mixed
      */
     protected function item(SmoothyApiResponse $response, \Closure $map)
     {

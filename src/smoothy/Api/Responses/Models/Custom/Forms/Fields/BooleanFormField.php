@@ -1,11 +1,11 @@
 <?php
 
-namespace Smoothy\Api\Responses\Models\FormBuilder\Forms\Fields;
+namespace Smoothy\Api\Responses\Models\Custom\Forms\Fields;
 
-use Illuminate\Support\Collection;
-use Smoothy\FormFields\BooleanFormField;
+use Smoothy\Models\FormFields\BooleanFormField as BooleanField;
+use Smoothy\Models\Translation;
 
-class BooleanField extends BooleanFormField implements Field
+class BooleanFormField extends BooleanField implements FormField
 {
     /**
      * @var int
@@ -21,15 +21,15 @@ class BooleanField extends BooleanFormField implements Field
      * BooleanField constructor.
      * @param int $id
      * @param int $formId
-     * @param Collection $label
-     * @param Collection $hint
+     * @param Translation $label
+     * @param Translation $hint
      * @param bool $required
      */
     public function __construct(
         int $id,
         int $formId,
-        Collection $label,
-        Collection $hint,
+        Translation $label,
+        Translation $hint,
         bool $required
     )
     {
@@ -37,21 +37,6 @@ class BooleanField extends BooleanFormField implements Field
 
         $this->id = $id;
         $this->formId = $formId;
-    }
-
-    /**
-     * @param array $attributes
-     * @return BooleanField
-     */
-    public static function create(array $attributes)
-    {
-        return new static(
-            $attributes['id'],
-            $attributes['form_id'],
-            collect($attributes['label']),
-            collect($attributes['hint']),
-            $attributes['required']
-        );
     }
 
     /**

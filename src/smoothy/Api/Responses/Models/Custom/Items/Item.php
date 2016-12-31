@@ -4,6 +4,7 @@ namespace Smoothy\Api\Responses\Models\Custom\Items;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Smoothy\Api\Responses\Models\Custom\Forms\Form;
 
 class Item
 {
@@ -45,12 +46,12 @@ class Item
     /**
      * @var Carbon
      */
-    private $createdAt;
+    private $date;
 
     /**
-     * @var Carbon
+     * @var Form
      */
-    private $updatedAt;
+    private $form;
 
     /**
      * CustomPage constructor.
@@ -61,9 +62,9 @@ class Item
      * @param int $moduleId
      * @param int $parentItemId
      * @param Collection $languages
-     * @param Carbon $createdAt
-     * @param Carbon $updatedAt
+     * @param Carbon $date
      * @param Collection $fields
+     * @param Form $form
      */
     public function __construct(
         int $id,
@@ -72,9 +73,9 @@ class Item
         int $moduleId,
         int $parentItemId,
         Collection $languages,
-        Carbon $createdAt,
-        Carbon $updatedAt,
-        Collection $fields
+        Carbon $date,
+        Collection $fields,
+        Form $form = null
     )
     {
         $this->id = $id;
@@ -82,36 +83,10 @@ class Item
         $this->typeId = $typeId;
         $this->moduleId = $moduleId;
         $this->parentItemId = $parentItemId;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->date = $date;
         $this->fields = $fields;
         $this->languages = $languages;
-    }
-
-    /**
-     * @param array $attributes
-     * @return Item
-     */
-    public static function create(array $attributes)
-    {
-        return new self(
-            $attributes['id'],
-            $attributes['order'],
-            $attributes['type_id'],
-            $attributes['module_id'],
-            $attributes['parent_item_id'],
-            collect($attributes['languages']),
-            Carbon::parse($attributes['created_at']['date']),
-            Carbon::parse($attributes['updated_at']['date']),
-            collect($attributes['fields'])->mapToAssoc(function($field) {
-                return [
-                    $field['field_id'],
-                    is_array($field['value'])
-                        ? collect($field['value'])
-                        : $field['value']
-                ];
-            })
-        );
+        $this->form = $form;
     }
 
     /**
@@ -182,16 +157,16 @@ class Item
     /**
      * @return Carbon
      */
-    public function getCreatedAt(): Carbon
+    public function getDate(): Carbon
     {
-        return $this->createdAt;
+        return $this->date;
     }
 
     /**
-     * @return Carbon
+     * @return Form
      */
-    public function getUpdatedAt(): Carbon
+    public function getForm(): Form
     {
-        return $this->updatedAt;
+        return $this->form;
     }
 }

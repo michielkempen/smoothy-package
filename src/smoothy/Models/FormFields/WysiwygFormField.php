@@ -1,20 +1,20 @@
 <?php
 
-namespace Smoothy\FormFields;
+namespace Smoothy\Models\FormFields;
 
-use Illuminate\Support\Collection;
+use Smoothy\Models\Translation;
 
 class WysiwygFormField extends TextAreaFormField
 {
     /**
      * TextFormField constructor.
-     * @param Collection $label
-     * @param Collection $hint
+     * @param Translation $label
+     * @param Translation $hint
      * @param bool $required
      */
     public function __construct(
-        Collection $label,
-        Collection $hint,
+        Translation $label,
+        Translation $hint,
         bool $required
     )
     {

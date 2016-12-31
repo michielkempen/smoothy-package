@@ -2,6 +2,7 @@
 
 namespace Smoothy\Api\Wrapper\Custom;
 
+use Smoothy\Api\Wrapper\Custom\Forms\FormsApi;
 use Smoothy\Api\Wrapper\Custom\Items\ItemsApi;
 use Smoothy\Api\Wrapper\Custom\Types\TypesApi;
 use Smoothy\Api\Wrapper\Custom\Modules\ModulesApi;
@@ -30,5 +31,13 @@ class CustomApi
     public function items() : ItemsApi
     {
         return new ItemsApi;
+    }
+
+    /**
+     * @return FormsApi
+     */
+    public function forms() : FormsApi
+    {
+        return new FormsApi;
     }
 }

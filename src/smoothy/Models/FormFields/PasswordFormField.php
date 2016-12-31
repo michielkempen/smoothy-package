@@ -1,6 +1,6 @@
 <?php
 
-namespace Smoothy\FormFields;
+namespace Smoothy\Models\FormFields;
 
 class PasswordFormField extends TextFormField
 {

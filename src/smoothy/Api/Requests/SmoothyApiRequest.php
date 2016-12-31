@@ -4,7 +4,7 @@ namespace Smoothy\Api\Requests;
 
 use Smoothy\Api\Exceptions\RequestException;
 use Smoothy\Api\Responses\ResponseFetcher;
-use Smoothy\Api\Responses\Transformers\Transformer;
+use Smoothy\Api\Responses\Transformers\ResponseTransformer;
 
 class SmoothyApiRequest
 {
@@ -29,7 +29,7 @@ class SmoothyApiRequest
     private $force = false;
 
     /**
-     * @var Transformer
+     * @var ResponseTransformer
      */
     private $transformer = null;
 
@@ -45,7 +45,8 @@ class SmoothyApiRequest
             ->host(smoothy_config('api-host'))
             ->header('Accept', 'application/vnd.smoothy.v1+json')
             ->header('Authorization', 'Bearer '.smoothy_api_access_token())
-            ->cache(60 * 24 * 7);
+            ->cache(60 * 24 * 7)
+            ->force();
     }
 
     /**
@@ -179,10 +180,10 @@ class SmoothyApiRequest
     }
 
     /**
-     * @param Transformer $transformer
+     * @param ResponseTransformer $transformer
      * @return SmoothyApiRequest $this
      */
-    public function transform(Transformer $transformer) : SmoothyApiRequest
+    public function transform(ResponseTransformer $transformer) : SmoothyApiRequest
     {
         $this->transformer = $transformer;
         return $this;
@@ -221,7 +222,7 @@ class SmoothyApiRequest
     }
 
     /**
-     * @return Transformer|null
+     * @return ResponseTransformer|null
      */
     public function getTransformer()
     {

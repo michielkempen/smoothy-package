@@ -3,10 +3,10 @@
 namespace Smoothy\Api\Responses\Transformers\Website;
 
 use Smoothy\Api\Responses\Models\Website\Website;
-use Smoothy\Api\Responses\Transformers\Transformer;
+use Smoothy\Api\Responses\Transformers\ResponseTransformer;
 use Smoothy\Api\Responses\SmoothyApiResponse;
 
-class GetTransformer extends Transformer
+class GetTransformer extends ResponseTransformer
 {
     /**
      * @param SmoothyApiResponse $response

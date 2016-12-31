@@ -1,11 +1,11 @@
 <?php
 
-namespace Smoothy\Api\Responses\Models\FormBuilder\Forms\Fields;
+namespace Smoothy\Api\Responses\Models\Custom\Forms\Fields;
 
-use Illuminate\Support\Collection;
-use Smoothy\FormFields\TextAreaFormField;
+use Smoothy\Models\FormFields\TextAreaFormField as TextAreaField;
+use Smoothy\Models\Translation;
 
-class TextAreaField extends TextAreaFormField implements Field
+class TextAreaFormField extends TextAreaField implements FormField
 {
     /**
      * @var int
@@ -21,17 +21,17 @@ class TextAreaField extends TextAreaFormField implements Field
      * TextAreaField constructor.
      * @param int $id
      * @param int $formId
-     * @param Collection $label
-     * @param Collection $placeholder
-     * @param Collection $hint
+     * @param Translation $label
+     * @param Translation $placeholder
+     * @param Translation $hint
      * @param bool $required
      */
     public function __construct(
         int $id,
         int $formId,
-        Collection $label,
-        Collection $placeholder,
-        Collection $hint,
+        Translation $label,
+        Translation $placeholder,
+        Translation $hint,
         bool $required
     )
     {
@@ -39,22 +39,6 @@ class TextAreaField extends TextAreaFormField implements Field
 
         $this->id = $id;
         $this->formId = $formId;
-    }
-
-    /**
-     * @param array $attributes
-     * @return TextAreaFormField
-     */
-    public static function create(array $attributes)
-    {
-        return new static(
-            $attributes['id'],
-            $attributes['form_id'],
-            collect($attributes['label']),
-            collect($attributes['placeholder']),
-            collect($attributes['hint']),
-            $attributes['required']
-        );
     }
 
     /**

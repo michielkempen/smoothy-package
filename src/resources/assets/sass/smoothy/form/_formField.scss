@@ -15,6 +15,7 @@
 	> input, textarea
 	{
 		width: 100%;
+		font-weight: inherit;
 		margin: 0;
 		background: $formFieldBackgroundColor;
 		padding: calc(#{$formFieldHeight} / 2 - 13px) 25px calc(#{$formFieldHeight} / 2 - 13px) 60px;

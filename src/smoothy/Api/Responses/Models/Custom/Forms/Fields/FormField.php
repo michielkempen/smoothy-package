@@ -1,8 +1,8 @@
 <?php
 
-namespace Smoothy\Api\Responses\Models\FormBuilder\Forms\Fields;
+namespace Smoothy\Api\Responses\Models\Custom\Forms\Fields;
 
-interface Field
+interface FormField
 {
     /**
      * @return int

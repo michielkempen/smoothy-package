@@ -1,8 +1,9 @@
 <?php
 
-namespace Smoothy\FormFields;
+namespace Smoothy\Models\FormFields;
 
 use Illuminate\Support\Collection;
+use Smoothy\Models\Translation;
 
 class FilesFormField extends FormField
 {
@@ -19,15 +20,15 @@ class FilesFormField extends FormField
     /**
      * FilesFormField constructor.
      *
-     * @param Collection $label
-     * @param Collection $hint
+     * @param Translation $label
+     * @param Translation $hint
      * @param bool $required
      * @param bool $multiple
      * @param Collection $fileTypes
      */
     public function __construct(
-        Collection $label,
-        Collection $hint,
+        Translation $label,
+        Translation $hint,
         bool $required,
         bool $multiple,
         Collection $fileTypes

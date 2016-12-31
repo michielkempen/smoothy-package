@@ -1,8 +1,9 @@
 <?php
 
-namespace Smoothy\FormFields;
+namespace Smoothy\Models\FormFields;
 
 use Illuminate\Support\Collection;
+use Smoothy\Models\Translation;
 
 class SelectFormField extends TextFormField
 {
@@ -14,14 +15,14 @@ class SelectFormField extends TextFormField
     /**
      * SelectFormField constructor.
      *
-     * @param Collection $label
-     * @param Collection $hint
+     * @param Translation $label
+     * @param Translation $hint
      * @param bool $required
      * @param Collection $options
      */
     public function __construct(
-        Collection $label,
-        Collection $hint,
+        Translation $label,
+        Translation $hint,
         bool $required,
         Collection $options
     )

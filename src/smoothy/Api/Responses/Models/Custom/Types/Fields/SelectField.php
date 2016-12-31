@@ -3,7 +3,8 @@
 namespace Smoothy\Api\Responses\Models\Custom\Types\Fields;
 
 use Illuminate\Support\Collection;
-use Smoothy\FormFields\SelectFormField;
+use Smoothy\Models\FormFields\SelectFormField;
+use Smoothy\Models\Translation;
 
 class SelectField extends SelectFormField implements Field
 {
@@ -21,16 +22,16 @@ class SelectField extends SelectFormField implements Field
      * SelectField constructor.
      * @param int $id
      * @param int $formId
-     * @param Collection $label
-     * @param Collection $hint
+     * @param Translation $label
+     * @param Translation $hint
      * @param bool $required
      * @param Collection $options
      */
     public function __construct(
         int $id,
         int $formId,
-        Collection $label,
-        Collection $hint,
+        Translation $label,
+        Translation $hint,
         bool $required,
         Collection $options
     )
@@ -39,22 +40,6 @@ class SelectField extends SelectFormField implements Field
 
         $this->id = $id;
         $this->typeId = $formId;
-    }
-
-    /**
-     * @param array $attributes
-     * @return SelectField
-     */
-    public static function create(array $attributes)
-    {
-        return new static(
-            $attributes['id'],
-            $attributes['type_id'],
-            collect($attributes['label']),
-            collect($attributes['hint']),
-            $attributes['required'],
-            collect($attributes['options'])
-        );
     }
 
     /**

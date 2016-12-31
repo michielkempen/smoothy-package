@@ -3,7 +3,7 @@
 namespace Smoothy\Api\Responses\Models\Custom\Modules;
 
 use Illuminate\Support\Collection;
-use Smoothy\Api\Responses\Models\Custom\Types\Type;
+use Smoothy\Models\Translation;
 
 class Module
 {
@@ -18,7 +18,7 @@ class Module
     private $languages;
 
     /**
-     * @var Collection
+     * @var Translation
      */
     private $name;
 
@@ -31,13 +31,13 @@ class Module
      * Module constructor.
      * @param int $id
      * @param Collection $languages
-     * @param Collection $name
+     * @param Translation $name
      * @param Collection $types
      */
     public function __construct(
         int $id,
         Collection $languages,
-        Collection $name,
+        Translation $name,
         Collection $types
     )
     {
@@ -45,22 +45,6 @@ class Module
         $this->languages = $languages;
         $this->name = $name;
         $this->types = $types;
-    }
-
-    /**
-     * @param array $attributes
-     * @return Module
-     */
-    public static function create(array $attributes)
-    {
-        return new self(
-            $attributes['id'],
-            collect($attributes['languages']),
-            collect($attributes['name']),
-            collect($attributes['types'])->map(function($type) {
-                return Type::create($type);
-            })
-        );
     }
 
     /**
@@ -80,9 +64,9 @@ class Module
     }
 
     /**
-     * @return Collection
+     * @return Translation
      */
-    public function getName(): Collection
+    public function getName(): Translation
     {
         return $this->name;
     }

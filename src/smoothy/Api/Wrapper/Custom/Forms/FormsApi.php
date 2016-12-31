@@ -1,24 +1,24 @@
 <?php
 
-namespace Smoothy\Api\Wrapper\FormBuilder\Records;
+namespace Smoothy\Api\Wrapper\Custom\Forms;
 
 use Smoothy\Api\Requests\SmoothyApiRequest;
 
-class RecordsApi
+class FormsApi
 {
     /**
-     * Add record to a formBuilder module.
+     * Add record to a custom module form.
      *
      * @param int $moduleId
-     * @param int $formId
+     * @param int $itemId
      * @param string $language
      * @param array $formData
      * @return SmoothyApiRequest
      */
-    public function create(int $moduleId, int $formId, string $language, array $formData)
+    public function create(int $moduleId, int $itemId, string $language, array $formData)
     {
         return (new SmoothyApiRequest)
-            ->post('formbuilder/'.$moduleId.'/forms/'.$formId.'/records')
+            ->post('custom/'.$moduleId.'/items/'.$itemId.'/form')
             ->parameter('language', $language)
             ->data($formData);
     }

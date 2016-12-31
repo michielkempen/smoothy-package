@@ -1,11 +1,11 @@
 <?php
 
-namespace Smoothy\Api\Responses\Models\Custom\Types;
+namespace Smoothy\Api\Responses\Models\Custom\Forms;
 
 use Illuminate\Support\Collection;
 use Smoothy\Models\Translation;
 
-class Type
+class Form
 {
     /**
      * @var int
@@ -15,7 +15,7 @@ class Type
     /**
      * @var Translation
      */
-    private $name;
+    private $successMessage;
 
     /**
      * @var Collection
@@ -23,20 +23,20 @@ class Type
     private $fields;
 
     /**
-     * Type constructor.
+     * Form constructor.
      *
      * @param int $id
-     * @param Translation $name
+     * @param Translation $successMessage
      * @param Collection $fields
      */
     public function __construct(
         int $id,
-        Translation $name,
+        Translation $successMessage,
         Collection $fields
     )
     {
         $this->id = $id;
-        $this->name = $name;
+        $this->successMessage = $successMessage;
         $this->fields = $fields;
     }
 
@@ -51,9 +51,9 @@ class Type
     /**
      * @return Translation
      */
-    public function getName(): Translation
+    public function getSuccessMessage()
     {
-        return $this->name;
+        return $this->successMessage;
     }
 
     /**
