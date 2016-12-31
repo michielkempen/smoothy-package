@@ -49,7 +49,6 @@ class ResponseParser
         if($response->isSuccessFull() || $response->containsValidationErrors())
             return $response;
 
-        dd($response);
         throw new ResponseException($response);
     }
 
