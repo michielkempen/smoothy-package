@@ -18,7 +18,7 @@ class WysiwygFormField extends TextAreaFormField
         bool $required
     )
     {
-        parent::__construct($label, collect(), $hint, $required);
+        parent::__construct($label, new Translation([]), $hint, $required);
     }
 
     /**

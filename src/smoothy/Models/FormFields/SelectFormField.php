@@ -27,7 +27,7 @@ class SelectFormField extends TextFormField
         Collection $options
     )
     {
-        parent::__construct($label, collect(), $hint, $required);
+        parent::__construct($label, new Translation([]), $hint, $required);
 
         $this->options = $options;
     }
