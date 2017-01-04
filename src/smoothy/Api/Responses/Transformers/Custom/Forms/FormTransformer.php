@@ -39,12 +39,12 @@ class FormTransformer extends ModelTransformer
                         return null;
                 }
             }),
-            is_null($attributes['published_from'])
-                ? null
-                : Carbon::parse($attributes['published_from']['date']),
-            is_null($attributes['published_until'])
-                ? null
-                : Carbon::parse($attributes['published_until']['date'])
+            isset($attributes['published_from']['date'])
+                ? Carbon::parse($attributes['published_from']['date'])
+                : null,
+            isset($attributes['published_until']['date'])
+                ? Carbon::parse($attributes['published_until']['date'])
+                : null
         );
     }
 
