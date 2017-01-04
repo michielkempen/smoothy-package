@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @param string $configKey
+ * @param null $default
+ * @return string|null
+ */
 function smoothy_config(string $configKey, $default = null)
 {
     $configValue = config('smoothy.'.$configKey);
@@ -9,16 +14,26 @@ function smoothy_config(string $configKey, $default = null)
         : $configValue;
 }
 
+/**
+ * @param string $configKey
+ * @return string
+ */
 function smoothy_api(string $configKey)
 {
     return config('smoothyapi.'.smoothy_config('api-environment').'.'.$configKey);
 }
 
+/**
+ * @return bool
+ */
 function smoothy_api_needs_setup() : bool
 {
     return is_null(smoothy_api_access_token());
 }
 
+/**
+ * @return string
+ */
 function smoothy_api_access_token()
 {
     $accessToken = smoothy_config('api-access-token');
@@ -30,21 +45,40 @@ function smoothy_api_access_token()
         );
 }
 
+/**
+ * Get the current locale of the system.
+ *
+ * @return string
+ */
 function currentLocale()
 {
     return \App::getLocale();
 }
 
+/**
+ * @param string $string
+ * @param int $id
+ * @return string
+ */
 function slug(string $string, int $id)
 {
     return \Slugify::slugify($string).'-'.$id;
 }
 
+/**
+ * @param string $url
+ * @return int
+ */
 function unslug(string $url)
 {
     return (int) last(explode('-', $url));
 }
 
+/**
+ * @param string $fileUrl
+ * @param array $manipulations
+ * @return string
+ */
 function manipulateImage(string $fileUrl, array $manipulations)
 {
     $fileName = last(explode('/', $fileUrl));

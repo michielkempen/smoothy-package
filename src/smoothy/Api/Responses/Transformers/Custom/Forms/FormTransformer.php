@@ -2,6 +2,7 @@
 
 namespace Smoothy\Api\Responses\Transformers\Custom\Forms;
 
+use Carbon\Carbon;
 use Smoothy\Api\Responses\Models\Custom\Forms\Fields\BooleanFormField;
 use Smoothy\Api\Responses\Models\Custom\Forms\Fields\FilesFormField;
 use Smoothy\Api\Responses\Models\Custom\Forms\Fields\SelectFormField;
@@ -37,7 +38,13 @@ class FormTransformer extends ModelTransformer
                     default:
                         return null;
                 }
-            })
+            }),
+            is_null($attributes['published_from'])
+                ? null
+                : Carbon::parse($attributes['published_from']['date']),
+            is_null($attributes['published_until'])
+                ? null
+                : Carbon::parse($attributes['published_until']['date'])
         );
     }
 
