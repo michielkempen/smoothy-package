@@ -45,8 +45,7 @@ class SmoothyApiRequest
             ->host(smoothy_config('api-host'))
             ->header('Accept', 'application/vnd.smoothy.v1+json')
             ->header('Authorization', 'Bearer '.smoothy_api_access_token())
-            ->cache(60 * 24 * 7)
-            ->force();
+            ->cache(60 * 24 * 7);
     }
 
     /**
