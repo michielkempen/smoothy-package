@@ -7,7 +7,7 @@
         @yield('app_meta')
         @yield('page_meta')
         {!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css') !!}
-        {!! HTML::style(elixir('css/app.css')) !!}
+        {!! HTML::style(mix('css/app.css')) !!}
         @yield('styles')
     </head>
     <body>
@@ -22,6 +22,6 @@
 
         @yield("scripts")
 
-        {!! HTML::script(elixir('js/app.js')) !!}
+        {!! HTML::script(mix('js/app.js')) !!}
     </body>
 </html>

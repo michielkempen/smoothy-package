@@ -37,24 +37,19 @@ class ItemTransformer extends ModelTransformer
      */
     private function transformFields(array $fields)
     {
-        return collect($fields)->mapToAssoc(function($field) {
+        $collection = new Collection;
+
+        collect($fields)->each(function($field) use (&$collection) {
             if($field['content_type'] == 'translation') {
-                return [
-                    $field['field_id'],
-                    new Translation($field['value'])
-                ];
+                $collection->put($field['field_id'], new Translation($field['value']));
             } else if($field['content_type'] == 'files') {
-                return [
-                    $field['field_id'],
-                    new Collection($field['value'])
-                ];
+                $collection->put($field['field_id'], new Collection($field['value']));
             } else {
-                return [
-                    $field['field_id'],
-                    $field['value']
-                ];
+                $collection->put($field['field_id'], $field['value']);
             }
         });
+
+        return $collection;
     }
 
     /**

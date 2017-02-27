@@ -98,7 +98,7 @@ class ResponseCache
     private function getCacheKey(Request $request, string $key = null) : string
     {
         return is_null($key)
-            ? 'smoothy::client_'.smoothy_config('api-client-id').'::'.$this->hasher->getHashFor($request)
+            ? 'smoothy::'.config('smoothy.license-id').'::'.$this->hasher->getHashFor($request)
             : $key;
     }
 }

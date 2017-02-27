@@ -5,7 +5,7 @@ namespace Smoothy\Api\Requests;
 class ApiRequest
 {
     /**
-     * @var string http|https
+     * @var string
      */
     private $scheme = 'http';
 

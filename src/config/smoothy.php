@@ -3,73 +3,34 @@
 return [
 
     /*
-     * Scheme of the application.
-     */
-    'scheme' => env('SCHEME', 'https'),
-
-    /*
-     * Defines if the laravel-localization middleware is loaded onto the routes.
-     */
-    'multi-lingual' => env('MULTI_LINGUAL', false),
-
-    /*
-     * Defines whether the application makes use of the API facilities.
-     */
-    'api-enabled' => env('SMOOTHY_API_ENABLED', false),
-
-    /*
-     * API environment.
-     */
-    'api-environment' => env('SMOOTHY_API_ENV', 'production'),
-
-    /*
-     * API scheme.
-     */
-    'api-scheme' => env('SMOOTHY_API_SCHEME', 'https'),
-
-    /*
-     * API host.
-     */
-    'api-host' => env('SMOOTHY_API_HOST', 'api.smoothy.nu'),
-
-    /*
-     * API client id.
-     */
-    'api-client-id' => env('SMOOTHY_API_CLIENT_ID'),
-
-    /*
-     * API client secret.
-     */
-    'api-client-secret' => env('SMOOTHY_API_CLIENT_SECRET'),
-
-    /*
-     * API access token.
-     */
-    'api-access-token' => env('SMOOTHY_API_ACCESS_TOKEN', null),
-
-    /*
-     * The lifetime in minutes of the api responses in the cache.
-     */
-    'api-cache-ttl' => env('SMOOTHY_API_CACHE_TTL', 10),
-
-    /*
-     * APP scheme.
-     */
-    'app-scheme' => env('SMOOTHY_APP_SCHEME', 'https'),
-
-    /*
-     * APP host.
-     */
-    'app-host' => env('SMOOTHY_APP_HOST', 'app.smoothy.nu'),
-
-    /*
-     * license id.
+     * license id
      */
     'license-id' => env('SMOOTHY_LICENSE_ID'),
 
     /*
+     * API access token
+     */
+    'access-token' => env('SMOOTHY_ACCESS_TOKEN', null),
+
+    /*
+     * The lifetime in minutes of the api responses in the cache.
+     */
+    'cache-ttl' => env('SMOOTHY_CACHE_TTL', 10),
+
+    /*
      * The secret to sign image manipulation requests.
      */
-    'image-manipulation-secret' => env('SMOOTHY_IMAGE_MANIPULATION_SECRET'),
+    'image-secret' => env('SMOOTHY_IMAGE_SECRET'),
+
+    /*
+     * API configuration
+     */
+    'api' => [
+
+        'website' => [
+            'module_id' => null
+        ],
+
+    ]
 
 ];

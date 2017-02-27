@@ -27,10 +27,7 @@ class CheckWebsiteStatus
      */
     public function handle($request, Closure $next)
     {
-        $website = $this->api
-            ->website()
-            ->get(smoothy_api('website.module_id'))
-            ->fetch();
+        $website = $this->api->website()->get(smoothy_api('website.module_id'))->fetch();
 
         switch ($website->getStatus())
         {

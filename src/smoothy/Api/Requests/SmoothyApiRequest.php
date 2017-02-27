@@ -41,11 +41,11 @@ class SmoothyApiRequest
         $this->request = new ApiRequest;
 
         $this
-            ->scheme(smoothy_config('api-scheme'))
-            ->host(smoothy_config('api-host'))
+            ->scheme('https')
+            ->host('api.smoothy.nu')
             ->header('Accept', 'application/vnd.smoothy.v1+json')
-            ->header('Authorization', 'Bearer '.smoothy_api_access_token())
-            ->cache(60 * 24 * 7);
+            ->header('Authorization', 'Bearer '.config('smoothy.access-token'))
+            ->cache(config('smoothy.cache-ttl'));
     }
 
     /**
