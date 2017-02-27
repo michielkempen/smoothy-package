@@ -8,6 +8,7 @@ use Collective\Html\FormFacade;
 use Collective\Html\HtmlFacade;
 use Collective\Html\HtmlServiceProvider;
 use Devitek\Core\Translation\TranslationServiceProvider;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -16,8 +17,7 @@ use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
 use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes;
 use Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect;
 use Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect;
-use Smoothy\Api\Setup\Providers\ApiRouteServiceProvider;
-use Smoothy\Api\Setup\Providers\ApiServiceProvider;
+use Smoothy\Middleware\ValidProxies;
 use Spatie\CookieConsent\CookieConsentServiceProvider;
 
 class SmoothyServiceProvider extends ServiceProvider
@@ -32,8 +32,6 @@ class SmoothyServiceProvider extends ServiceProvider
         HtmlServiceProvider::class,
         LaravelLocalizationServiceProvider::class,
         RouteServiceProvider::class,
-        ApiRouteServiceProvider::class,
-        ApiServiceProvider::class,
         CookieConsentServiceProvider::class,
         SlugifyServiceProvider::class,
     ];
@@ -119,8 +117,8 @@ class SmoothyServiceProvider extends ServiceProvider
      */
     private function registerMiddleware()
     {
-        $kernel = $this->app->make(\Illuminate\Contracts\Http\Kernel::class);
-        $kernel->pushMiddleware(\Smoothy\Middleware\ValidProxies::class);
+        $kernel = $this->app->make(Kernel::class);
+        $kernel->pushMiddleware(ValidProxies::class);
 
         foreach ($this->routeMiddleware as $name => $class)
             $this->app['router']->middleware($name, $class);

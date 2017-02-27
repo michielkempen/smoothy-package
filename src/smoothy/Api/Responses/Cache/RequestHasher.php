@@ -18,8 +18,6 @@ class RequestHasher
             $request = $request->withRequestTarget((string) $request->getUri());
         }
 
-        return 'smoothy-api-cache-'.md5(
-            \GuzzleHttp\Psr7\str($request)
-        );
+        return 'smoothy::'.md5(\GuzzleHttp\Psr7\str($request));
     }
 }

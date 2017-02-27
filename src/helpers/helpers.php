@@ -24,25 +24,11 @@ function smoothy_api(string $configKey)
 }
 
 /**
- * @return bool
- */
-function smoothy_api_needs_setup() : bool
-{
-    return is_null(smoothy_api_access_token());
-}
-
-/**
  * @return string
  */
 function smoothy_api_access_token()
 {
-    $accessToken = smoothy_config('api-access-token');
-
-    return !is_null($accessToken)
-        ? $accessToken
-        : (new \Smoothy\Api\Responses\Cache\SmoothyCache)->getAccessToken(
-            'api-access-token-'.smoothy_config('api-client-id')
-        );
+    return smoothy_config('api-access-token');
 }
 
 /**

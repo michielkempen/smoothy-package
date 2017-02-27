@@ -5,7 +5,7 @@ namespace Smoothy\Api\Responses\Cache;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Cache\Repository;
+use Illuminate\Contracts\Cache\Repository;
 use Smoothy\Api\Requests\RequestParser;
 use Smoothy\Api\Requests\SmoothyApiRequest;
 
@@ -27,7 +27,7 @@ class ResponseCache
     private $requestParser;
 
     /**
-     * @var SmoothyCache
+     * @var Repository
      */
     private $cache;
 
@@ -36,7 +36,7 @@ class ResponseCache
      */
     public function __construct()
     {
-        $this->cache = new SmoothyCache;
+        $this->cache = app(Repository::class);
         $this->hasher = new RequestHasher;
         $this->requestParser = new RequestParser;
         $this->serializer = new ResponseSerializer;
@@ -63,9 +63,8 @@ class ResponseCache
     public function cacheResponse(SmoothyApiRequest $request, Response $response, int $minutes, string $key = null)
     {
         $request = $this->requestParser->parse($request->getRequest());
-        $response = $this->addCachedHeader($response);
 
-        $this->getCache($request, $key)->put(
+        $this->cache->put(
             $this->getCacheKey($request, $key),
             $this->serializer->serialize($response),
             Carbon::now()->addMinutes($minutes)
@@ -86,51 +85,9 @@ class ResponseCache
 
         $request = $this->requestParser->parse($request->getRequest());
 
-        $response = $this->getCache($request, $key)->get(
-            $this->getCacheKey($request, $key),
-            null
-        );
+        $response = $this->cache->get($this->getCacheKey($request, $key));
 
-        return is_null($response)
-            ? null
-            : $this->serializer->unserialize($response);
-    }
-
-    /**
-     * Add a header with the cache date on the response.
-     *
-     * @param Response $response
-     * @return Response
-     */
-    private function addCachedHeader(Response $response)
-    {
-        $clonedResponse = clone $response;
-
-        return $clonedResponse->withHeader(
-            'smoothy-api-cache',
-            'cached on '.date('Y-m-d H:i:s')
-        );
-    }
-
-    /**
-     * @param Request $request
-     * @param string|null $key
-     * @return Repository|SmoothyCache
-     */
-    private function getCache(Request $request, string $key = null)
-    {
-        return is_null($key)
-            ? $this->cache->tags([$this->getApiCall($request)])
-            : $this->cache;
-    }
-
-    /**
-     * @param Request $request
-     * @return string
-     */
-    private function getApiCall(Request $request) : string
-    {
-        return $request->getUri()->getPath();
+        return is_null($response) ? null : $this->serializer->unserialize($response);
     }
 
     /**
@@ -141,7 +98,7 @@ class ResponseCache
     private function getCacheKey(Request $request, string $key = null) : string
     {
         return is_null($key)
-            ? $this->hasher->getHashFor($request)
+            ? 'smoothy::client_'.smoothy_config('api-client-id').'::'.$this->hasher->getHashFor($request)
             : $key;
     }
 }
