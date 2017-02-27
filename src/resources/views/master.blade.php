@@ -7,7 +7,8 @@
         @yield('app_meta')
         @yield('page_meta')
         {!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css') !!}
-        @yield('styles')
+        @yield('app_styles')
+        @yield('page_styles')
     </head>
     <body>
         @yield('page')
@@ -17,6 +18,7 @@
         {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js') !!}
         {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.1/switchery.min.js') !!}
         {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js') !!}
-        @yield("scripts")
+        @yield("app_scripts")
+        @yield("page_scripts")
     </body>
 </html>
