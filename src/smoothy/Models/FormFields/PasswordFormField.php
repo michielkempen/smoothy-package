@@ -2,13 +2,17 @@
 
 namespace Smoothy\Models\FormFields;
 
+use Illuminate\Support\Collection;
+
 class PasswordFormField extends TextFormField
 {
     /**
-     * @return string
+     * @return Collection
      */
-    public function getView() : string
+    public function serialize() : Collection
     {
-        return 'smoothy::form.fields.passwordField';
+        return parent::serialize()->merge([
+            'type' => 'passwordField'
+        ]);
     }
 }

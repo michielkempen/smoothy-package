@@ -2,13 +2,17 @@
 
 namespace Smoothy\Models\FormFields;
 
+use Illuminate\Support\Collection;
+
 class BooleanFormField extends FormField
 {
     /**
-     * @return string
+     * @return Collection
      */
-    public function getView() : string
+    public function serialize() : Collection
     {
-        return 'smoothy::form.fields.booleanField';
+        return parent::serialize()->merge([
+            'type' => 'booleanField'
+        ]);
     }
 }

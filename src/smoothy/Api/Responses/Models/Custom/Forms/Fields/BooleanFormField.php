@@ -2,6 +2,7 @@
 
 namespace Smoothy\Api\Responses\Models\Custom\Forms\Fields;
 
+use Illuminate\Support\Collection;
 use Smoothy\Models\FormFields\BooleanFormField as BooleanField;
 use Smoothy\Models\Translation;
 
@@ -61,5 +62,17 @@ class BooleanFormField extends BooleanField implements FormField
     public function getFormId() : int
     {
         return $this->formId;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function serialize() : Collection
+    {
+        return parent::serialize()->merge([
+            'id' => $this->id,
+            'name' => $this->getName(),
+            'form_id' => $this->getFormId()
+        ]);
     }
 }

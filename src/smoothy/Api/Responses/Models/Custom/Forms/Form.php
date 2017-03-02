@@ -4,6 +4,7 @@ namespace Smoothy\Api\Responses\Models\Custom\Forms;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Smoothy\Api\Responses\Models\Custom\Forms\Fields\FormField;
 use Smoothy\Models\Translation;
 
 class Form
@@ -114,5 +115,20 @@ class Form
             return false;
 
         return true;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function serialize() : Collection
+    {
+        return new Collection([
+            'id' => $this->id,
+            'success_message' => (string) $this->successMessage,
+            'fields' => $this->fields->map(function(FormField $field) {
+                return $field->serialize();
+            }),
+            'is_published' => $this->isPublished()
+        ]);
     }
 }

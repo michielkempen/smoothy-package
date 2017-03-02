@@ -2,6 +2,7 @@
 
 namespace Smoothy\Models\FormFields;
 
+use Illuminate\Support\Collection;
 use Smoothy\Models\Translation;
 
 class TextFormField extends FormField
@@ -48,10 +49,13 @@ class TextFormField extends FormField
     }
 
     /**
-     * @return string
+     * @return Collection
      */
-    public function getView() : string
+    public function serialize() : Collection
     {
-        return 'smoothy::form.fields.textField';
+        return parent::serialize()->merge([
+            'type' => 'textField',
+            'placeholder' => (string) $this->placeholder,
+        ]);
     }
 }

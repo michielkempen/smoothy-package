@@ -73,4 +73,16 @@ class SelectFormField extends SelectField implements FormField
     {
         return false; // TODO: change
     }
+
+    /**
+     * @return Collection
+     */
+    public function serialize() : Collection
+    {
+        return parent::serialize()->merge([
+            'id' => $this->id,
+            'name' => $this->getName(),
+            'form_id' => $this->getFormId()
+        ]);
+    }
 }

@@ -79,10 +79,14 @@ class FilesFormField extends FormField
     }
 
     /**
-     * @return string
+     * @return Collection
      */
-    public function getView() : string
+    public function serialize() : Collection
     {
-        return 'smoothy::form.fields.filesField';
+        return parent::serialize()->merge([
+            'type' => 'filesField',
+            'multiple' => $this->multiple,
+            'file_types' => $this->getFileTypesString()
+        ]);
     }
 }

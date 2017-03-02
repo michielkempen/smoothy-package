@@ -2,6 +2,7 @@
 
 namespace Smoothy\Models\FormFields;
 
+use Illuminate\Support\Collection;
 use Smoothy\Models\Translation;
 
 class WysiwygFormField extends TextAreaFormField
@@ -22,10 +23,12 @@ class WysiwygFormField extends TextAreaFormField
     }
 
     /**
-     * @return string
+     * @return Collection
      */
-    public function getView() : string
+    public function serialize() : Collection
     {
-        return 'smoothy::form.fields.wysiwygField';
+        return parent::serialize()->merge([
+            'type' => 'wysiwygField'
+        ]);
     }
 }

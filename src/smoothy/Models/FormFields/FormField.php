@@ -2,6 +2,7 @@
 
 namespace Smoothy\Models\FormFields;
 
+use Illuminate\Support\Collection;
 use Smoothy\Models\Translation;
 
 abstract class FormField
@@ -73,7 +74,14 @@ abstract class FormField
     }
 
     /**
-     * @return string
+     * @return Collection
      */
-    public abstract function getView() : string;
+    public function serialize() : Collection
+    {
+        return new Collection([
+            'label' => (string) $this->label,
+            'hint' => (string) $this->hint,
+            'required' => $this->required
+        ]);
+    }
 }

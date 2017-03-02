@@ -46,10 +46,13 @@ class SelectFormField extends TextFormField
     }
 
     /**
-     * @return string
+     * @return Collection
      */
-    public function getView() : string
+    public function serialize() : Collection
     {
-        return 'smoothy::form.fields.selectField';
+        return parent::serialize()->merge([
+            'type' => 'selectField',
+            'options' => $this->getOptions(currentLocale())
+        ]);
     }
 }

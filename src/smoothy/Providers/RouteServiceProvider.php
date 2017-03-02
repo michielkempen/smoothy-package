@@ -17,9 +17,15 @@ class RouteServiceProvider extends BaseRouteServiceProvider
     {
         require __DIR__ . '/../../helpers/routeHelpers.php';
 
-        $router->group(['middleware' => 'web'], function () {
+        $router->group(['middleware' => 'web'], function ($router) {
 
             require base_path('routes/web.php');
+
+            $router->group(['middleware' => 'ajax'], function () {
+
+                require base_path('routes/api.php');
+
+            });
 
         });
     }
