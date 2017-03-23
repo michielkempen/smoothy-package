@@ -41,6 +41,6 @@ class Translation
      */
     public function __toString()
     {
-        return $this->translations->get(currentLocale(), '');
+        return (string) $this->translations->get(currentLocale(), '');
     }
 }

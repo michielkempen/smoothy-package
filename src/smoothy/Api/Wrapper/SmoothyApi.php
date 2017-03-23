@@ -2,17 +2,17 @@
 
 namespace Smoothy\Api\Wrapper;
 
-use Smoothy\Api\Wrapper\Custom\CustomApi;
+use Smoothy\Api\Wrapper\Content\ContentApi;
 use Smoothy\Api\Wrapper\Website\WebsiteApi;
 
 class SmoothyApi
 {
     /**
-     * @return CustomApi
+     * @return ContentApi
      */
-    public function custom() : CustomApi
+    public function content() : ContentApi
     {
-        return new CustomApi;
+        return new ContentApi;
     }
 
     /**

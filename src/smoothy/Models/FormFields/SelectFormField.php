@@ -8,6 +8,11 @@ use Smoothy\Models\Translation;
 class SelectFormField extends TextFormField
 {
     /**
+     * @var bool
+     */
+    private $multiple;
+
+    /**
      * @var Collection
      */
     private $options;
@@ -18,17 +23,20 @@ class SelectFormField extends TextFormField
      * @param Translation $label
      * @param Translation $hint
      * @param bool $required
+     * @param bool $multiple
      * @param Collection $options
      */
     public function __construct(
         Translation $label,
         Translation $hint,
         bool $required,
+        bool $multiple,
         Collection $options
     )
     {
-        parent::__construct($label, new Translation([]), $hint, $required);
+        parent::__construct($label, new Translation([]), $hint, $required, false);
 
+        $this->multiple = $multiple;
         $this->options = $options;
     }
 
@@ -52,6 +60,7 @@ class SelectFormField extends TextFormField
     {
         return parent::serialize()->merge([
             'type' => 'selectField',
+            'multiple' => $this->multiple,
             'options' => $this->getOptions(currentLocale())
         ]);
     }

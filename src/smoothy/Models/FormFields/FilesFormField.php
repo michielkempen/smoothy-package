@@ -13,6 +13,11 @@ class FilesFormField extends FormField
     private $fileTypes;
 
     /**
+     * @var int
+     */
+    private $maximumNumber;
+
+    /**
      * @var bool
      */
     private $multiple;
@@ -24,6 +29,7 @@ class FilesFormField extends FormField
      * @param Translation $hint
      * @param bool $required
      * @param bool $multiple
+     * @param int $maximumNumber
      * @param Collection $fileTypes
      */
     public function __construct(
@@ -31,13 +37,15 @@ class FilesFormField extends FormField
         Translation $hint,
         bool $required,
         bool $multiple,
+        int $maximumNumber,
         Collection $fileTypes
     )
     {
         parent::__construct($label, $hint, $required);
 
-        $this->fileTypes = $fileTypes;
         $this->multiple = $multiple;
+        $this->maximumNumber = $maximumNumber;
+        $this->fileTypes = $fileTypes;
     }
 
     /**
@@ -46,6 +54,14 @@ class FilesFormField extends FormField
     public function isMultiple(): bool
     {
         return $this->multiple;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaximumNumber(): int
+    {
+        return $this->maximumNumber;
     }
 
     /**
@@ -86,6 +102,7 @@ class FilesFormField extends FormField
         return parent::serialize()->merge([
             'type' => 'filesField',
             'multiple' => $this->multiple,
+            'maximum_number' => $this->maximumNumber,
             'file_types' => $this->getFileTypesString()
         ]);
     }

@@ -13,22 +13,30 @@ class TextFormField extends FormField
     private $placeholder;
 
     /**
+     * @var bool
+     */
+    private $translatable;
+
+    /**
      * TextFormField constructor.
      * @param Translation $label
      * @param Translation $placeholder
      * @param Translation $hint
      * @param bool $required
+     * @param bool $translatable
      */
     public function __construct(
         Translation $label,
         Translation $placeholder,
         Translation $hint,
-        bool $required
+        bool $required,
+        bool $translatable
     )
     {
         parent::__construct($label, $hint, $required);
 
         $this->placeholder = $placeholder;
+        $this->translatable = $translatable;
     }
 
     /**
@@ -49,6 +57,14 @@ class TextFormField extends FormField
     }
 
     /**
+     * @return bool
+     */
+    public function isTranslatable(): bool
+    {
+        return $this->translatable;
+    }
+
+    /**
      * @return Collection
      */
     public function serialize() : Collection
@@ -56,6 +72,7 @@ class TextFormField extends FormField
         return parent::serialize()->merge([
             'type' => 'textField',
             'placeholder' => (string) $this->placeholder,
+            'translatable' => $this->translatable
         ]);
     }
 }

@@ -30,8 +30,7 @@ body
     position: relative;
 }
 
-@import "vendor/select2/core";
-@import "vendor/switchery/switchery";
+@import "vendor/select2/select2";
 @import "form/form";
 @import "wysiwyg";
 @import "cookie_consent";

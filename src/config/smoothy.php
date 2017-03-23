@@ -10,7 +10,7 @@ return [
     /*
      * API access token
      */
-    'access-token' => env('SMOOTHY_ACCESS_TOKEN', null),
+    'api-key' => env('SMOOTHY_API_KEY', null),
 
     /*
      * The lifetime in minutes of the api responses in the cache.
@@ -27,8 +27,11 @@ return [
      */
     'api' => [
 
+        // website
+
         'website' => [
-            'module_id' => null
+            'id' => 0,
+            'parent_item' => 0
         ],
 
     ]
