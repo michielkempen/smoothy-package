@@ -41,8 +41,8 @@ class SmoothyApiRequest
         $this->request = new ApiRequest;
 
         $this
-            ->scheme('http')
-            ->host('api.smoothy.dev')
+            ->scheme('https')
+            ->host('api.smoothy.nu')
             ->header('Accept', 'application/vnd.smoothy.v1+json')
             ->header('license-id', config('smoothy.license-id'))
             ->header('api-key', config('smoothy.api-key'))
