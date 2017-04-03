@@ -33,10 +33,7 @@ class SearchTransformer extends ResponseTransformer
         return $this->possiblyPaginatedCollection($response, function($item) {
             $item = (new ItemTransformer)->transform($item);;
 
-            $searchItem = $this->searchIndex
-                ->where('module_id', $item->getModuleId())
-                ->where('parent_item_id', $item->getParentItemId())
-                ->first();
+            $searchItem = $this->searchIndex->where('module_id', $item->getModuleId())->first();
 
             return is_null($searchItem)
                 ? null

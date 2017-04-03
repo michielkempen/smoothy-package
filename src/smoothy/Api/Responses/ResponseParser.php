@@ -20,7 +20,7 @@ class ResponseParser
 
         return ($request->getRequest()->getMethod() == 'GET')
             ? $this->parseGetResponse($response, $request)
-            : $this->parseOtherResponse($response);
+            : $this->parseOtherResponse($response, $request);
     }
 
     /**
@@ -41,13 +41,17 @@ class ResponseParser
 
     /**
      * @param SmoothyApiResponse $response
+     * @param SmoothyApiRequest $request
      * @return SmoothyApiResponse
      * @throws ResponseException
      */
-    private function parseOtherResponse(SmoothyApiResponse $response)
+    private function parseOtherResponse(SmoothyApiResponse $response, SmoothyApiRequest $request)
     {
-        if($response->isSuccessFull() || $response->containsValidationErrors())
-            return $response;
+        if($response->isSuccessFull() || $response->containsValidationErrors()) {
+            return is_null($request->getTransformer())
+                ? $response
+                : $request->getTransformer()->transform($response);
+        }
 
         throw new ResponseException($response);
     }

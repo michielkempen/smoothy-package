@@ -73,9 +73,11 @@ class ItemsApi
         })->toJson();
 
         return (new SmoothyApiRequest)
-            ->get('content/items/search')
-            ->parameter('query', $query)
-            ->parameter('modules', $modules)
+            ->post('content/items/search')
+            ->data([
+                'query' => $query,
+                'modules' => $modules
+            ])
             ->parameter('language', $language)
             ->parameter('per_page', $perPage)
             ->parameter('page', $page)
