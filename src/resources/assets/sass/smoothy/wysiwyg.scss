@@ -243,13 +243,13 @@
 			display: block;
 			margin: 35px auto;
 
-			&.fr-fvl iframe
+			&.fr-fvl iframe, &.fr-fvl video
 			{
 				float: left;
 				margin: 0;
 			}
 
-			&.fr-fvr iframe
+			&.fr-fvr iframe, &.fr-fvr video
 			{
 				float: right;
 				margin: 0;
@@ -261,7 +261,7 @@
 			display: inline-block;
 		}
 
-		iframe
+		iframe, video
 		{
 			vertical-align: bottom;
 			margin: 0 auto;

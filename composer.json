@@ -16,8 +16,8 @@
     ],
     "require": {
         "php": "^7.0",
-        "cocur/slugify": "^2.4",
-        "devitek/yaml-translation": "^2.1",
+        "cocur/slugify": "2.*",
+        "devitek/yaml-translation": "3.*",
         "guzzlehttp/guzzle": "^6.2",
         "illuminate/http": "5.4.*",
         "illuminate/support": "5.4.*",
