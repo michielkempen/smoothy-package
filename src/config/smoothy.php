@@ -13,6 +13,11 @@ return [
     'api-key' => env('SMOOTHY_API_KEY', null),
 
     /*
+     * Force API calls
+     */
+    'force' => false,
+
+    /*
      * The lifetime in minutes of the api responses in the cache.
      */
     'cache-ttl' => env('SMOOTHY_CACHE_TTL', 10),

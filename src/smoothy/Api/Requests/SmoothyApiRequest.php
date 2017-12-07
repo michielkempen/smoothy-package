@@ -47,6 +47,10 @@ class SmoothyApiRequest
             ->header('license-id', config('smoothy.license-id'))
             ->header('api-key', config('smoothy.api-key'))
             ->cache(config('smoothy.cache-ttl'));
+
+        if(config('smoothy.force')) {
+            $this->force();
+        }
     }
 
     /**
