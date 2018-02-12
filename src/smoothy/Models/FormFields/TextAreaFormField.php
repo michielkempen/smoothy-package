@@ -2,17 +2,13 @@
 
 namespace Smoothy\Models\FormFields;
 
-use Illuminate\Support\Collection;
-
 class TextAreaFormField extends TextFormField
 {
     /**
-     * @return Collection
+     * @return string
      */
-    public function serialize() : Collection
+    public function getType()
     {
-        return parent::serialize()->merge([
-            'type' => 'textAreaField'
-        ]);
+        return 'textAreaField';
     }
 }

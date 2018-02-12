@@ -2,7 +2,6 @@
 
 namespace Smoothy\Models\FormFields;
 
-use Illuminate\Support\Collection;
 use Smoothy\Models\Translation;
 
 abstract class FormField
@@ -60,8 +59,10 @@ abstract class FormField
      * @param string $language
      * @return bool
      */
-    public function hasHint(string $language) : bool
+    public function hasHint(string $language = null) : bool
     {
+        $language = is_null($language) ? currentLocale() : $language;
+
         return $this->hint->language($language) != '';
     }
 
@@ -71,17 +72,5 @@ abstract class FormField
     public function isRequired() : bool
     {
         return $this->required;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function serialize() : Collection
-    {
-        return new Collection([
-            'label' => (string) $this->label,
-            'hint' => (string) $this->hint,
-            'required' => $this->required
-        ]);
     }
 }

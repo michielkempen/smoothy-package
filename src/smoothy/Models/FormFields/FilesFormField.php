@@ -95,15 +95,10 @@ class FilesFormField extends FormField
     }
 
     /**
-     * @return Collection
+     * @return string
      */
-    public function serialize() : Collection
+    public function getType()
     {
-        return parent::serialize()->merge([
-            'type' => 'filesField',
-            'multiple' => $this->multiple,
-            'maximum_number' => $this->maximumNumber,
-            'file_types' => $this->getFileTypesString()
-        ]);
+        return 'filesField';
     }
 }

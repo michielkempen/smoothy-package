@@ -51,8 +51,10 @@ class TextFormField extends FormField
      * @param string $language
      * @return bool
      */
-    public function hasPlaceholder(string $language) : bool
+    public function hasPlaceholder(string $language = null) : bool
     {
+        $language = is_null($language) ? currentLocale() : $language;
+
         return $this->placeholder->language($language) != '';
     }
 
@@ -65,14 +67,10 @@ class TextFormField extends FormField
     }
 
     /**
-     * @return Collection
+     * @return string
      */
-    public function serialize() : Collection
+    public function getType()
     {
-        return parent::serialize()->merge([
-            'type' => 'textField',
-            'placeholder' => (string) $this->placeholder,
-            'translatable' => $this->translatable
-        ]);
+        return 'textField';
     }
 }

@@ -44,8 +44,10 @@ class SelectFormField extends TextFormField
      * @param string $language
      * @return array
      */
-    public function getOptions(string $language) : array
+    public function getOptions(string $language = null) : array
     {
+        $language = is_null($language) ? currentLocale() : $language;
+
         return $this->options->map(function($option) use ($language) {
             return array_key_exists($language, $option)
                 ? $option[$language]
@@ -54,14 +56,18 @@ class SelectFormField extends TextFormField
     }
 
     /**
-     * @return Collection
+     * @return boolean
      */
-    public function serialize() : Collection
+    public function isMultiple(): bool
     {
-        return parent::serialize()->merge([
-            'type' => 'selectField',
-            'multiple' => $this->multiple,
-            'options' => $this->getOptions(currentLocale())
-        ]);
+        return $this->multiple;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return 'selectField';
     }
 }

@@ -79,7 +79,6 @@ class SmoothyServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->bootAssets();
-        $this->bootViews();
         $this->bootLanguageFiles();
     }
 
@@ -120,20 +119,8 @@ class SmoothyServiceProvider extends ServiceProvider
     private function bootAssets()
     {
         $this->publishes([
-            __DIR__.'/../../resources/assets/sass' => resource_path('assets/sass'),
-        ], 'update');
-
-        $this->publishes([
             __DIR__.'/../../config/smoothy.php' => config_path('smoothy.php'),
         ], 'init');
-    }
-
-    /**
-     * Boot all the views in the resources/views directory.
-     */
-    private function bootViews()
-    {
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'smoothy');
     }
 
     /**
